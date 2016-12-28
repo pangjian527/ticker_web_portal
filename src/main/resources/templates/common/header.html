@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta content="text/html;charset=UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>六合生肖 准确预判 发财致富</title>
+
+    <link th:href="@{/style.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/index.css}" rel="stylesheet" type="text/css"/>
+
+
+    <style type="text/css">
+        div.buy_pop{
+            width:800px;
+            position:fixed;
+            margin-left:-400px;
+            left:50%;
+            margin-top:-250px;
+            top:50%;
+            z-index:1000;
+            background-color:white;
+            height:350px;
+            border:2px solid #ccc;
+            border-top:2px solid #ff4a00;
+            padding:20px;
+        }
+        div.b_left_panel{
+            width:450px;
+            float:left;
+        }
+        div.b_title{
+            font-weight:600;
+            border-bottom:1px dashed #e4e4e4;
+            line-height:50px;
+            font-size:18px;
+            height:50px;
+            margin:auto;
+        }
+        div.b_f_form{
+            width:335px;
+            float:left;
+            border-left:1px dashed #e4e4e4;
+            height:400px;
+            margin-left:10px;
+        }
+        div.b_desc{
+            padding: 10px;
+            line-height: 25px;
+            font-size: 16px;
+        }
+        div.b_buy_detail{
+            padding:10px 0;
+        }
+        div.b_buy_detail ul li{
+            float: left;
+            width: 50%;
+            height: 30px;
+            line-height: 30px;
+            color: #666;
+        }
+         div.b_buy_price b{
+            font-size: 100px;
+            color: red;
+         }
+        div.b_buy_price label{
+            font-size: 25px;
+            font-style: italic;
+            text-decoration: line-through;
+        }
+        div.u_balance{
+            width:95%;
+            border-bottom:1px dashed #e4e4e4;
+            height:50px;
+            margin:auto;
+            line-height:50px;
+            margin-bottom: 40px;
+        }
+        div.u_balance b{
+            font-size:25px;
+            color:red;
+        }
+
+        div.u_balance a{
+            float:right;
+            color:#666;
+        }
+        div.u_balance a:hover{
+            color:red;
+        }
+
+        div.b_i_form{
+            width:95%;
+            margin:auto;
+            padding:5px;
+            text-align:center;
+        }
+
+        div.b_i_form input{
+            height:35px;
+            text-indent:10px;
+            width:200px;
+        }
+        div.b_i_form input.number{
+            width:100px;
+        }
+        div.b_i_form button{
+            border:0;
+            width:90px;
+            margin-left:6px;
+            height:40px;
+        }
+
+        div.buy_button{
+            width:95%;
+            margin:auto;
+            text-align:center;
+            margin-top:30px;
+        }
+        div.buy_button a{
+            display: inline-block;
+            color: white;
+            height: 40px;
+            width: 150px;
+            background-color: #df3033;
+            line-height: 40px;
+            font-size:18px;
+            font-weight:bold;
+        }
+         div.buy_button a.cancel{
+            background-color:#ccc;
+         }
+
+         img.logo{
+            height:100px;
+         }
+
+
+    </style>
+
+</head>
+<body>
+<div th:fragment="header">
+<div class="content t_menu">
+    <div class="t_menu_item">
+        <ul>
+            <li th:if="${session.session_user_code == null}"><a href="/portal/login">登录/注册</a></li>
+            <li th:if="${session.session_user_code != null}">
+                <a th:text="${session.session_user_code.mobile}" href="/portal/login">登录/注册</a>
+                <a href="/portal/logout">退出</a>
+            </li>
+            <li><a href="/portal/center">我的金币</a></li>
+            <li><a href="">金币充值</a></li>
+            <li><a href="/portal/center">我的订购</a></li>
+            <li><a href="">联系我们</a></li>
+        </ul>
+    </div>
+</div>
+<div class="head t_w">
+    <div class="d_logo_l">
+        <a class="logo" href="">
+            <img class="logo" th:src="@{/images/logo.png}"/>
+        </a>
+        <a class="top_ad" href="">
+
+        </a>
+    </div>
+</div>
+
+<div class="content nav">
+    <div class="menu t_w">
+        <ul>
+            <li class="main">彩票网</li>
+            <li><a href="/portal/index">首页</a></li>
+            <li><a href="#"> 一元购</a></li>
+            <li><a href="/portal/topic/deliver"> 心水发帖</a></li>
+            <li><a href="#"> 联系我们</a></li>
+        </ul>
+    </div>
+</div>
+</div>
+</body>
+</html>

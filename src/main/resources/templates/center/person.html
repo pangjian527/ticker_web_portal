@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta content="text/html;charset=UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>个人中心</title>
+
+    <link th:href="@{/style.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/index.css}" rel="stylesheet" type="text/css"/>
+
+    <link href="style.css" rel="stylesheet" type="text/css"/>
+
+    <style type="text/css">
+
+        html,body{
+            height:100%;
+        }
+
+        div.p_center{
+            margin:auto;
+            height:100%;
+            border-right:1px solid #e4e4e4;
+        }
+        div.p_center_left_panel{
+            width:200px;
+            border-left:1px solid #e4e4e4;
+            height:100%;
+            background-color:#eaedf4;
+            float: left;
+        }
+
+        div.p_center_head{
+            text-align:center;
+            padding-top: 10px;
+        }
+        div.p_center_head img{
+             border-radius:50%;
+        }
+        p.p_account{
+            text-align:center;
+            border-bottom:1px solid #e4e4e4;
+            height:40px;
+            line-height:40px;
+            margin:0;
+        }
+
+        ul.p_center_menu {
+            border-bottom:1px solid #e4e4e4;
+        }
+
+        ul.p_center_menu li{
+            height:40px;
+            line-height:40px;
+            text-indent:50px;
+            position:relative;
+        }
+        ul.p_center_menu li a{
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+        ul.p_center_menu li a.active{
+            background:white;
+        }
+        ul.p_center_menu li a:hover{
+            background-color:#dce0e9;
+        }
+
+        ul.p_center_menu li i{
+            background-image: url('https://static.360buyimg.com/finance/assets/common/1.3.0/css/i/common-slice-s9b2b4c12c3.png');
+            display: block;
+            position: absolute;
+            right: 10px;
+            top: 13px;
+            height: 12px;
+            width: 20px;
+            background-repeat: no-repeat;
+            background-position: 5px -13px;
+        }
+
+        div.p_center_right_panel{
+            float:left;
+            width:999px;
+        }
+        div.p_center_balance{
+            width:98%;
+            margin:auto;
+        }
+        div.p_center_balance span{
+            width:49%;
+            display:inline-block;
+            height:150px;
+        }
+        div.p_center_balance span b{
+            padding-top:50px;
+            padding-left:150px;
+            display:block;
+            font-size:20px;
+        }
+        div.p_center_balance span label{
+            padding-left:150px;
+            display:block;
+            height:50px;
+            line-height:50px;
+            font-size:30px;
+            font-weight:600;
+        }
+
+        div label.t_row_spit{
+            font-weight:600;
+        }
+
+        table{
+            margin: auto;
+            margin-top:20px;
+            width:98%;
+            border-top:1px solid #e4e4e4;
+        }
+
+        table thead td{
+            background-color:#f7f7f7;
+        }
+        td.text_center{
+            text-align:center;
+            width:50px;
+        }
+
+        table td{
+            height:45px;
+            border-bottom:1px solid #e4e4e4;
+        }
+
+
+
+    </style>
+
+</head>
+<body>
+    <div th:include="common/header::header"></div>
+    <div class="t_w p_center">
+        <div class="p_center_left_panel">
+            <div class="p_center_head">
+                <img src="https://static.360buyimg.com/finance/assets/common/1.3.0/css/i/user-logo.jpg" />
+            </div>
+            <p class="p_account">135****9614</p>
+            <ul class="p_center_menu">
+                <li>
+                    <a href="/portal/center?code=order" th:class="${orderList==null}?'':'active'">我的订单</a>
+                    <i class="icon"></i>
+                </li>
+                <li>
+                    <a href="/portal/center?code=recharge" th:class="${rechargeList==null}?'':'active'">充值记录</a>
+                    <i></i>
+                </li>
+                <li>
+                    <a href="">金币充值</a>
+                    <i></i>
+                </li>
+            </ul>
+        </div>
+        <div class="p_center_right_panel">
+            <div class="p_center_balance">
+                <span>
+                    <b>我的金币</b>
+                    <label th:text="${#numbers.formatDecimal(consumer.balance,1,2)}" >100.00</label>
+                </span>
+                <span>
+                    <b>我的中奖率</b>
+                    <label>?.00%</label>
+                </span>
+            </div>
+            <div class="content t_row_spit_panel">
+                <label class="t_row_spit" th:if="${orderList !=null}">我的订单</label>
+                <label class="t_row_spit" th:if="${rechargeList !=null}">充值记录</label>
+            </div>
+            <table cellspacing="0" cellpadding="0" th:if="${orderList !=null }">
+                <thead>
+                    <tr>
+                        <td class="text_center">NO.</td>
+                        <td>标题</td>
+                        <td>购买时间</td>
+                        <td>消费金币</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="order,orderStat:${orderList}">
+                        <td class="text_center" th:text="(${orderStat.index}+1)">1</td>
+                        <td th:text="${order.title}">123期经典六肖-经典六肖-经典六肖-经典六肖</td>
+                        <td th:text="${#dates.format(order.createTime,'yyy-MM-dd HH:mm')}">2016-11-30 20:30:30</td>
+                        <td th:text="${order.amount}">10</td>
+                    </tr>
+                </tbody>
+            </table>
+            <table cellpadding="0" cellspacing="0" th:if="${rechargeList!=null}">
+                <thead>
+                <tr>
+                    <td width="50">NO.</td>
+                    <td width="200">充值金额</td>
+                    <td width="200">赠送金币</td>
+                    <td width="180">充值时间</td>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="recharge,rechargeStat:${rechargeList}">
+                    <td th:text="(${rechargeStat.index}+1)">1</td>
+                    <td th:text="${recharge.amount}">￥100</td>
+                    <td th:text="${recharge.giveAmount}">￥30</td>
+                    <td th:text="${#dates.format(recharge.createTime,'yyy-MM-dd HH:mm')}">2016-11-30</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div th:include="common/footer::footer"></div>
+</body>
+</html>

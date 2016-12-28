@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta content="text/html;charset=UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title th:text="${topic.title}">发帖</title>
+
+    <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <link th:href="@{/style.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/index.css}" rel="stylesheet" type="text/css"/>
+    <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script th:src="@{/ckeditor/ckeditor.js}" ></script>
+    <script type="text/javascript" th:src="@{/js/jquery-3.1.1.min.js}"></script>
+
+    <style type="text/css">
+
+        div.t_detail{
+            margin:auto;
+            border:1px solid #e4e4e4;
+        }
+
+        div.t_detail div.t_count{
+            width:250px;
+            float:left;
+            height:45px;
+            line-height:45px;
+            text-align:center;
+            font-size:14px;
+            background-color:#f7f7f7;
+
+        }
+        div.t_detail div.t_title{
+            width:948px;
+            float:left;
+            height:45px;
+            line-height:45px;
+            text-indent:15px;
+            color: #333;
+            font-weight: bold;
+            border-left:1px solid #e4e4e4;
+        }
+        div.t_c_item dl.t_content dt {
+            width:250px;
+            float:left;
+            border-top:1px solid #e4e4e4;
+        }
+        dl.t_content {
+            width:100%;
+        }
+        div.t_c_item dt i.t_u_head_img{
+            width: 15px;
+            height: 14px;
+            display: inline-block;
+            background-image: url("http://bbs.blueidea.com/static/image/common/gender1.gif");
+            background-repeat: no-repeat;
+
+        }
+
+
+        dl.t_content ul li{
+            height: 25px;
+            line-height: 25px;
+            padding-left: 20px;
+            font-size:14px;
+            float:left;
+        }
+        dl.t_content ul li b{
+            color:red;
+        }
+
+        div.t_p_time{
+            clear:both;
+            padding-left:20px;
+            height:25px;
+            line-height:25px;
+            font-size:14px;
+        }
+
+        dd.t_topic_content{
+            width:948px;
+            float:left;
+            border-left:1px solid #e4e4e4;
+            min-height:50px;
+            border-top:1px solid #e4e4e4;
+        }
+        div.t_p_c_w{
+            width:930px;
+            margin:auto;
+            padding: 10px;
+        }
+        div.t_p_time_detail{
+            height:45px;
+            line-height:45px;
+            border-bottom: 1px dashed #e4e4e4;
+            font-size:14px;
+        }
+
+        div.page_panel{
+            width: 1200px;
+            margin: auto;
+            text-align: right;
+        }
+
+        div.opera_panel{
+            clear:both;
+            text-align:right;
+        }
+        div.opera_panel{
+            height:80px;
+        }
+
+        a.submit{
+            width: 265px;
+            height: 40px;
+            background-color: #f3294f;
+            color: white;
+            text-align: center;
+            line-height: 40px;
+            font-size: 16px;
+            font-weight: 700;
+            border-radius: 3px;
+            padding: 15px 60px;
+            line-height: 80px;
+        }
+
+    </style>
+
+    <script type="text/javascript">
+
+        function submit(){
+
+            var content = CKEDITOR.instances.editor1.getData();
+
+            var topicId = document.getElementById("topicId").value;
+
+            $.ajax({
+                url: "/portal/topic/reply",
+                dataType:"json",
+                type:"post",
+                data:{"topicId":topicId,"content":content},
+                success: function(object){
+                   if(object.ok == true){
+                     window.location.reload();
+                   }else{
+                     alert(object.result);
+                   }
+                }
+             });
+
+
+        }
+    </script>
+
+</head>
+<body>
+    <div th:include="common/header::header"></div>
+
+    <div class="content t_w t_detail">
+        <div class="t_count">
+            <label>查看：<b style="color:red;" th:text="${topic.readCount}">77786</b></label>
+            <label>回复：<b style="color:red;" th:text="${topic.replyCount}">786</b></label>
+        </div>
+        <div class="t_title" th:text="${topic.title}">[作品展示] 牛逼闪闪——超酷的HTML 3D动态效果 </div>
+        <div style="clear:both;"></div>
+        <div class="t_c_item">
+            <dl class="t_content">
+                <dt >
+                    <div style="height:45px;line-height:45px;padding-left:20px;border-bottom: 1px dashed #e4e4e4;">
+                        <i class="t_u_head_img"></i>
+                        <label th:text="${topic.mobile}">135****9614</label>
+                    </div>
+                    <img src=""/>
+                    <ul>
+                        <li>
+                            <label>主题</label>
+                            <b>20</b>
+                        </li>
+                        <li>
+                            <label>战绩</label>
+                            <b>10中8</b>
+                        </li>
+                    </ul>
+                    <div class="t_p_time">
+                        注册时间
+                        <b>2015-10-10</b>
+                    </div>
+                </dt>
+                <dd class="t_topic_content">
+                    <div class="t_p_c_w t_p_time_detail">发表于
+                        <label th:text="${#dates.format(topic.createTime,'yyy-MM-dd HH:mm')}">2011-12-12 10:17:01</label>
+                    </div>
+                    <div class="t_p_c_w" th:utext="${topic.content}">
+                        内容
+                    </div>
+                </dd>
+                <div style="clear:both;"></div>
+            </dl>
+        </div>
+
+        <div class="t_c_item" th:each="reply,replyStat:${replyResults}">
+            <dl class="t_content">
+                <dt >
+                <div style="height:45px;line-height:45px;padding-left:20px;border-bottom: 1px dashed #e4e4e4;">
+                    <i class="t_u_head_img"></i>
+                    <label th:text="${reply.mobile}">135****9614</label>
+                </div>
+                <img src=""/>
+                <ul>
+                    <li>
+                        <label>主题</label>
+                        <b>20</b>
+                    </li>
+                    <li>
+                        <label>战绩</label>
+                        <b>10中8</b>
+                    </li>
+                </ul>
+                <div class="t_p_time">
+                    注册时间
+                    <b>2015-10-10</b>
+                </div>
+                </dt>
+                <dd class="t_topic_content">
+                    <div class="t_p_c_w t_p_time_detail">发表于
+                        <label th:text="${#dates.format(reply.createTime,'yyy-MM-dd HH:mm')}">2011-12-12 10:17:01</label>
+                    </div>
+                    <div class="t_p_c_w" th:utext="${reply.content}">
+                        回复内容
+                    </div>
+                </dd>
+                <div style="clear:both;"></div>
+            </dl>
+        </div>
+    </div>
+    <div class="page_panel">
+        <ul class="pagination pagination-lg">
+            <li><a href="#">上一页</a></li>
+            <li th:each="url,urlStat:${pageResult.pageUrls}"><a th:href="${url}" th:text="(${urlStat.index}+1)"></a></li>
+            <li><a href="#">下一页</a></li>
+        </ul>
+    </div>
+    <div class="content t_w">
+        <form action="/portal/topic/reply" method="post">
+            <div class="t_content">
+                     <textarea name="content" id="editor1" rows="8" cols="80">
+
+                    </textarea>
+                <script>
+                        CKEDITOR.replace( 'editor1' );
+                </script>
+            </div>
+            <div class="opera_panel">
+                <input type="hidden" name="topicId" id="topicId" th:value="${topic.id}"/>
+                <a href="javascript:submit()" class="submit">回帖</a>
+            </div>
+        </form>
+    </div>
+    <div th:include="common/footer::footer"></div>
+</body>
+</html>

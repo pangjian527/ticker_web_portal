@@ -1,0 +1,38 @@
+div.m_data_panel{
+    width:98%;
+    margin:auto;
+}
+div.m_data_panel table{
+    width:100%;
+}
+div.m_data_panel table thead td{
+    background:#f7f7f7;
+    height:50px;
+    padding:0 5px;
+    border-bottom: 1px solid #e4e4e4;
+    font-weight: bold;
+}
+
+div.m_data_panel table tbody td{
+    height:45px;
+    padding:0 5px;
+    border-bottom: 1px solid #e4e4e4;
+}
+
+div.m_data_panel table tbody td a{
+    font-size:14px;
+    padding:8px 5px;
+}
+
+div.m_data_panel table tbody td a:hover{
+    color:white;
+    background-color:#B1191A;
+    text-decoration:none;
+}
+
+div.page_panel{
+    text-align:right;
+    height:50px;
+    line-height:50px;
+    padding-right:30px;
+}

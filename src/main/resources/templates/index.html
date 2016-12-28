@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta content="text/html;charset=UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>六合生肖 准确预判 发财致富</title>
+
+    <link th:href="@{/style.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/index.css}" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" th:src="@{/js/jquery-3.1.1.min.js}"></script>
+
+    <style type="text/css">
+        div.iframe{
+            width:815px;
+            position:fixed;
+            margin-left:-400px;
+            left:50%;
+            margin-top:-250px;
+            top:50%;
+            z-index:1000;
+            background-color:white;
+            height:360px;
+            border:2px solid #ccc;
+            border-top:2px solid #ff4a00;
+            padding:5px;
+        }
+
+        div.iframe iframe{
+            width:100%;
+            height:100%;
+        }
+
+        div.buy_pop{
+            width:800px;
+            position:fixed;
+            margin-left:-400px;
+            left:50%;
+            margin-top:-250px;
+            top:50%;
+            z-index:1000;
+            background-color:white;
+            height:350px;
+            border:2px solid #ccc;
+            border-top:2px solid #ff4a00;
+            padding:20px;
+        }
+        div.b_left_panel{
+            width:450px;
+            float:left;
+        }
+        div.b_title{
+            font-weight:600;
+            border-bottom:1px dashed #e4e4e4;
+            line-height:50px;
+            font-size:18px;
+            height:50px;
+            margin:auto;
+        }
+        div.b_f_form{
+            width:335px;
+            float:left;
+            border-left:1px dashed #e4e4e4;
+            height:400px;
+            margin-left:10px;
+        }
+        div.b_desc{
+            padding: 10px;
+            line-height: 25px;
+            font-size: 16px;
+        }
+        div.b_buy_detail{
+            padding:10px 0;
+        }
+        div.b_buy_detail ul li{
+            float: left;
+            width: 50%;
+            height: 30px;
+            line-height: 30px;
+            color: #666;
+        }
+         div.b_buy_price b{
+            font-size: 100px;
+            color: red;
+         }
+        div.b_buy_price label{
+            font-size: 25px;
+            font-style: italic;
+            text-decoration: line-through;
+        }
+        div.u_balance{
+            width:95%;
+            border-bottom:1px dashed #e4e4e4;
+            height:50px;
+            margin:auto;
+            line-height:50px;
+            margin-bottom: 40px;
+        }
+        div.u_balance b{
+            font-size:25px;
+            color:red;
+        }
+
+        div.u_balance a{
+            float:right;
+            color:#666;
+        }
+        div.u_balance a:hover{
+            color:red;
+        }
+
+        div.b_i_form{
+            width:95%;
+            margin:auto;
+            padding:5px;
+            text-align:center;
+        }
+
+        div.b_i_form input{
+            height:35px;
+            text-indent:10px;
+            width:200px;
+        }
+        div.b_i_form input.number{
+            width:100px;
+        }
+        div.b_i_form button{
+            border:0;
+            width:90px;
+            margin-left:6px;
+            height:40px;
+        }
+
+        div.buy_button{
+            width:95%;
+            margin:auto;
+            text-align:center;
+            margin-top:30px;
+        }
+        div.buy_button a{
+            display: inline-block;
+            color: white;
+            height: 40px;
+            width: 150px;
+            background-color: #df3033;
+            line-height: 40px;
+            font-size:18px;
+            font-weight:bold;
+        }
+         div.buy_button a.cancel{
+            background-color:#ccc;
+         }
+
+         td i{
+            padding: 5px;
+            border-radius: 13px;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+         }
+         i.red{
+            background:red;
+
+         }
+         i.blue{
+            background:blue;
+         }
+
+         i.green{
+            background:green;
+         }
+
+         div.layout{
+            position:fixed;
+            left:0;
+            top:0;
+            bottom:0;
+            right:0;
+            background-color:#171717;
+            ilter:alpha(opacity=50);  /*支持 IE 浏览器*/
+            -moz-opacity:0.50; /*支持 FireFox 浏览器*/
+            opacity:0.50;  /*支持 Chrome, Opera, Safari 等浏览器*/
+            z-index:990;
+         }
+
+    </style>
+
+    <script type="text/javascript">
+
+        function buy(id){
+
+            $.ajax({
+                url: "/portal/login/check",
+                dataType:"json",
+                type:"post",
+                success: function(object){
+                   if(object.ok == false){
+                     window.location = "/portal/login";
+                   }else{
+                     openBuyPage(id);
+                   }
+                }
+             });
+        }
+
+        function openBuyPage(id){
+            var layoutDiv = document.createElement("div");
+            layoutDiv.className = "layout";
+            document.body.appendChild(layoutDiv);
+            layoutDiv.id = "layout_div";
+
+            var iframeElement = document.createElement("iframe");
+            iframeElement.src = "/portal/buy?id="+id;
+
+            var divElement = document.createElement("div");
+            divElement.className = "iframe";
+            divElement.appendChild(iframeElement);
+            divElement.id = "divElement";
+
+            document.body.appendChild(divElement);
+        }
+
+        function closeLayout(){
+             var layoutElement = document.getElementById("layout_div");
+             var divElement = document.getElementById("divElement");
+             document.body.removeChild(divElement);
+             document.body.removeChild(layoutElement);
+        }
+
+    </script>
+
+</head>
+<body>
+<div th:include="common/header::header"></div>
+
+<div class="content flash-imgage">
+    <div style="width:100%">
+        <img width="100%" th:src="@{/images/banner_1.jpg}"/>
+    </div>
+</div>
+<div class="content t_w" style="margin:auto;height:45px;border-bottom:1px solid #ccc;position:relative">
+    <label class="t_row_spit">一元购</label>
+</div>
+<div class="content recommend t_w">
+    <div class="one_left">
+        <table cellpadding="0" cellspacing="0">
+            <thead>
+            <tr>
+                <td width="20">期号</td>
+                <td width="20">特码</td>
+                <td width="20">生肖</td>
+                <td width="40">日期</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="lottery:${lotteryDatas}">
+                <td th:text="${lottery.stage}">215</td>
+                <td><i th:text="${lottery.number}" th:class="${lottery.colorCode}">30</i></td>
+                <td th:text="${lottery.zodiacCode}">马</td>
+                <td th:text="${#dates.format(lottery.lotteryDate,'yyy-MM-dd')}">2015-11-20</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="one_right">
+        <table cellspacing="0" cellpadding="0">
+            <thead>
+            <tr>
+                <td width="auto" style="text-align:left">标题</td>
+                <td width="60">金额</td>
+                <td width="100">作者</td>
+                <td width="130">操作</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="product,productStat:${listResult}">
+                <td style="text-align:left;">
+                    <div style="font-size:18px;"><a href="" th:text="${product.title}"> 123期经典六肖-经典六肖-经典六肖-经典六肖</a></div>
+                    <div style="color:red;font-size:12px;" th:text="${product.probability}">中奖率：十期中9期</div>
+                </td>
+                <td><strong class="price" th:text="${product.balance}"> ￥1</strong></td>
+                <td th:text="${product.mobile}">135****9614</td>
+                <td><a class="buy" th:href="'javascript:buy(\''+${product.id}+'\')'">立即购买</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div style="clear:both"></div>
+</div>
+
+<div class="content t_w" style="margin:auto;height:45px;border-bottom:1px solid #ccc;position:relative">
+    <label class="t_row_spit">资料专区</label>
+    <a class="tip_op" href="">查看更多</a>
+</div>
+
+<div class="content t_w topic">
+    <table cellpadding="0" cellspacing="0">
+        <thead>
+        <tr>
+            <td width="50">序号</td>
+            <td width="auto">标题</td>
+            <td width="130">作者</td>
+            <td width="130">阅读/回复</td>
+            <td width="180">发表时间</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="topic,topicStat:${listTopicResult}">
+            <td th:text="(${topicStat.index}+1)">1</td>
+            <td><a target="_blank" th:href="'/portal/topic/view?id='+${topic.id}" th:text="${topic.title}"> 九六马会心水论坛六肖王：→羊 蛇 兔 猪 马 龙→ 准吗？</a></td>
+            <td th:text="${topic.mobile}">135****9614</td>
+            <td th:text="${topic.readCount}+'/'+${topic.replyCount}">100/80</td>
+            <td th:text="${#dates.format(topic.createTime,'yyy-MM-dd HH:mm')}">2016-11-30</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="content t_w">
+    <img src="http://www.91htw.com/img-402881a9552b543001552b77068c0064.do" />
+</div>
+
+<div class="footer">
+    <div class="f-copyright">
+        <label>Copyright © 2004-2016  版权所有|投资有风险，购买需谨慎</label>
+    </div>
+</div>
+
+<div class="buy_pop" style="display:none">
+    <div class="b_left_panel">
+        <div class="b_title">
+            <i class="b_icon_hot"><img src="http://bbs.blueidea.com/static/image/common/hot_3.gif" /></i>
+            <label>123期经典六肖-经典六肖-经典六肖-经典六肖</label>
+        </div>
+        <div class="b_buy_detail">
+            <ul>
+                <li>
+                    作者：<label>135****9614</label>
+                </li>
+                <li>
+                    历史战绩：<label>10中8</label>
+                </li>
+                <li>
+                    购买人数：<label>688</label>
+                </li>
+                <li>
+                    开奖日期：<label>2016-11-30 21:30</label>
+                </li>
+            </ul>
+            <div style="clear:both;"></div>
+        </div>
+        <div class="b_buy_price">
+            <b>￥1.0</b>
+            <label>￥999.0</label>
+        </div>
+        <div class="b_desc">
+            <label>
+                注：开奖前两个小时将停止购买。购买成功后，平台将通过短信的方式发送到您的注册手机，如未收到短信，请联系管理员或者在平台上查看。
+            </label>
+        </div>
+
+    </div>
+
+    <div class="b_f_form">
+        <div class="u_balance">
+            <label>可用金币：<b>￥100.00</b></label>
+            <a href="">余额充值</a>
+        </div>
+        <div class="b_i_form">
+            <label>用户号：</label>
+            <input placeholder="手机号码" type="text"/>
+        </div>
+        <div class="b_i_form">
+            <label>验证码：</label>
+            <input placeholder="图形验证码" class="number" type="text"/>
+            <button>获取验证码</button>
+        </div>
+        <div class="b_i_form">
+            <label>验证码：</label>
+            <input placeholder="短信验证码" class="number" type="text"/>
+            <button>获取验证码</button>
+        </div>
+        <div class="buy_button">
+            <a class="cancel" href="">取消</a>
+            <a href="">购买</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

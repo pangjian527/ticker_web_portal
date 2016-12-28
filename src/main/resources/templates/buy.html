@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta content="text/html;charset=UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>商品购买</title>
+
+    <link th:href="@{/style.css}" rel="stylesheet" type="text/css"/>
+
+    <script type="text/javascript" th:src="@{/js/jquery-3.1.1.min.js}"></script>
+    <style type="text/css">
+        div.buy_pop{
+            background-color: white;
+            height: 350px;
+        }
+
+        div.b_left_panel{
+            width:450px;
+            float:left;
+        }
+        div.b_title{
+            font-weight:600;
+            border-bottom:1px dashed #e4e4e4;
+            line-height:50px;
+            font-size:18px;
+            height:50px;
+            margin:auto;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        div.b_f_form{
+            width:335px;
+            float:left;
+            border-left:1px dashed #e4e4e4;
+            height:350px;
+            margin-left:10px;
+        }
+        div.b_desc{
+            padding: 10px;
+            line-height: 25px;
+            font-size: 16px;
+        }
+        div.b_buy_detail{
+            padding:10px 0;
+        }
+        div.b_buy_detail ul li{
+            float: left;
+            width: 50%;
+            height: 30px;
+            line-height: 30px;
+            color: #666;
+        }
+        div.b_buy_price{
+            padding-left:30px;
+        }
+         div.b_buy_price b{
+            font-size: 100px;
+            color: red;
+         }
+        div.b_buy_price label{
+            font-size: 25px;
+            font-style: italic;
+            text-decoration: line-through;
+        }
+        div.u_balance{
+            width:95%;
+            border-bottom:1px dashed #e4e4e4;
+            height:50px;
+            margin:auto;
+            line-height:50px;
+            margin-bottom: 40px;
+        }
+        div.u_balance b{
+            font-size:25px;
+            color:red;
+        }
+
+        div.u_balance a{
+            float:right;
+            color:#666;
+        }
+        div.u_balance a:hover{
+            color:red;
+        }
+
+        div.b_i_form{
+            width:95%;
+            margin:auto;
+            padding:5px;
+            text-align:center;
+        }
+
+        div.b_i_form input{
+            height:35px;
+            text-indent:10px;
+            width:200px;
+        }
+        div.b_i_form input.number{
+            width:100px;
+        }
+        div.b_i_form button{
+            border:0;
+            width:90px;
+            margin-left:6px;
+            height:40px;
+        }
+
+        div.buy_button{
+            width:95%;
+            margin:auto;
+            text-align:center;
+            margin-top:30px;
+        }
+        div.buy_button a{
+            display: inline-block;
+            color: white;
+            height: 40px;
+            width: 150px;
+            background-color: #df3033;
+            line-height: 40px;
+            font-size:18px;
+            font-weight:bold;
+        }
+         div.buy_button a.cancel{
+            background-color:#ccc;
+         }
+         img.valid{
+            vertical-align: middle;
+        }
+    </style>
+
+    <script type="text/javascript">
+
+        function cancel(){
+            window.parent.closeLayout();
+        }
+
+        function buy(productId){
+
+            var validCode = document.getElementById("validCode").value;
+            var smsCode = document.getElementById("smsCode").value;
+            var productId = document.getElementById("productId").value;
+
+            if(validCode ==""){
+                alert("请输入图形验证码");
+                return ;
+            }else if(smsCode ==""){
+                alert("请输入短信验证码");
+                return ;
+            }
+
+            $.ajax({
+                url: "/portal/buy/submit",
+                dataType:"json",
+                type:"post",
+                data:{"productId":productId,"smsCode":smsCode,"validCode":validCode},
+                success: function(object){
+                   if(object.ok == true){
+                     alert("购买成功")
+                     window.parent.location = "/portal/index";
+                   }else{
+                     alert(object.result);
+                   }
+                }
+             });
+
+        }
+
+    </script>
+
+</head>
+<body>
+<div class="buy_pop" style="">
+    <div class="b_left_panel">
+        <div class="b_title">
+            <i class="b_icon_hot"><img src="http://bbs.blueidea.com/static/image/common/hot_3.gif" /></i>
+            <label th:text="${product.title}">123期经典六肖-经典六肖-经典六肖-经典六肖</label>
+        </div>
+        <div class="b_buy_detail">
+            <ul>
+                <li>
+                    作者：<label th:text="${product.mobile}">135****9614</label>
+                </li>
+                <li>
+                    历史战绩：<label th:text="${product.probability}">10中8</label>
+                </li>
+                <li>
+                    购买人数：<label th:text="${product.virtualCount}">688</label>
+                </li>
+                <li>
+                    开奖期数：<label th:text="${product.year}+'年'+${product.stage}+'期'">2016-11-30 21:30</label>
+                </li>
+            </ul>
+            <div style="clear:both;"></div>
+        </div>
+        <div class="b_buy_price">
+            <b th:text="${#numbers.formatDecimal(product.balance,1,2)}">￥1.0</b>
+            <label>￥999.0</label>
+        </div>
+        <div class="b_desc">
+            <label>
+                注：开奖前两个小时将停止购买。购买成功后，平台将通过短信的方式发送到您的注册手机，如未收到短信，请联系管理员或者在平台上查看。
+            </label>
+        </div>
+
+    </div>
+
+    <div class="b_f_form">
+        <div class="u_balance">
+            <label>可用金币：￥<b th:text="${#numbers.formatDecimal(consumer.balance,1,2)}">0.00</b></label>
+            <a href="">余额充值</a>
+        </div>
+        <div class="b_i_form">
+            <label>验证码：</label>
+            <input placeholder="图形验证码" class="number" name="validCode" id="validCode" type="text"/>
+            <img class="valid" th:src="${valiBase64Image}"/>
+        </div>
+        <div class="b_i_form">
+            <label>验证码：</label>
+            <input placeholder="短信验证码" class="number" name="smsCode" id="smsCode" type="text"/>
+            <input type="hidden" id="productId" name="productId" th:value="${product.id}"/>
+            <button>获取验证码</button>
+        </div>
+        <div class="buy_button">
+            <a class="cancel" href="javascript:cancel()">取消</a>
+            <a href="javascript:buy()">购买</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

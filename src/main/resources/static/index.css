@@ -1,0 +1,191 @@
+div.head {
+    margin:auto;
+    height:100px;
+    position:relative;
+}
+div.content{
+    margin:auto;
+}
+
+div.recommend{
+    margin-top:15px;
+}
+div.footer {
+    height:80px;
+    margin:auto;
+    background: #e4e4e4;
+    height: 85px;
+    font-size:16px;
+    color:#b3b5ba;
+}
+div.footer div.f-copyright{
+    height:80px;
+    line-height:80px;
+    text-align:center;
+}
+
+div.nav {
+    background-color:whithe;
+    height:50px;
+    border-bottom:2px solid #B1191A;
+}
+div.nav .menu{
+    margin:auto;
+    height:100%;
+}
+div.nav .menu ul li {
+    float:left;
+    width:130px;
+    line-height:50px;
+    text-align:center;
+}
+div.nav .menu ul li a{
+    font: 400 15px/50px "microsoft yahei";
+    color: #333;
+}
+
+div.nav .menu ul li.main {
+    width:200px;
+    background-color:#B1191A;
+    color:white;
+    font-size:28px;
+}
+
+div a.logo{
+    display: table-cell;
+    vertical-align: middle;
+    height: 100px;
+}
+
+div.d_logo_l{
+    height: 100%;
+    width: 270px;
+    float: left;
+}
+
+
+div.one_left{
+    width:25%;
+    float:left;
+}
+
+div.one_left table{
+    width:100%;
+    border-top:1px solid #e4e4e4;
+    border-left:1px solid #e4e4e4;
+}
+
+div.one_left table thead td {
+    background: #f7f7f7;
+}
+
+div.one_left table tr td{
+     text-align:center;
+}
+div.one_left table tr td{
+    height:40px;
+    border-right: 1px solid #e4e4e4;
+    border-bottom: 1px solid #e4e4e4;
+}
+
+div.one_right{
+    float:left;
+    height:100%;
+    width:75%;
+}
+div.one_right table{
+    float:right;
+    width:99%;
+}
+div.one_right table td{
+    height:40px;
+    text-align:center;
+    border-bottom: 1px solid #e4e4e4;
+    padding:0 10px;
+}
+div.one_right table thead td {
+    background: #f7f7f7;
+    border-top: 1px solid #e4e4e4;
+}
+
+div.one_right table tbody td {
+    height:90px;
+}
+
+a.buy {
+    display:inline-block;
+    width:80px;
+    height:30px;
+    color:white;
+    background-color:red;
+    text-align:center;
+    line-height:30px;
+    font-size:14px;
+    border-radius: 16px;
+}
+strong.price{
+    display: inline-block;
+    vertical-align: middle;
+    color: #e4393c;
+    font-size: 20px;
+}
+div.topic {
+    margin-top:10px;
+}
+div.topic table{
+    width:100%;
+}
+
+ div.topic table thead td {
+    background: #f7f7f7;
+    border-top: 1px solid #e4e4e4;
+
+}
+div.topic table tr td{
+    height:50px;
+    border-bottom: 1px solid #e4e4e4;
+    padding:0 10px;
+}
+
+a.tip_op {
+    position: absolute;
+    top: 18px;
+    right: 10px;
+    font-size: 14px;
+    color: red;
+}
+a.top_ad{
+    position: absolute;
+    top: 30px;
+    left: 550px;
+}
+div.t_menu{
+    height:30px;
+    background-color:#F1F1F1;
+
+}
+div.t_menu_item{
+    width:1200px;
+    margin:auto;
+}
+div.t_menu_item ul{
+    float:right;
+}
+div.t_menu_item ul li {
+    float:left;
+    font-size:12px;
+    line-height:30px;
+    padding-left:15px;
+}
+label.number {
+    color: white;
+    background-color: red;
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+    line-height: 25px;
+    border-radius: 15px;
+}
+img.logo{
+    height:100px;
+}

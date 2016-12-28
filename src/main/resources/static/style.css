@@ -1,0 +1,46 @@
+body,ul,li,dl,dt,dd,table,tr,td{
+    padding:0;
+    margin:0;
+}
+
+body ,html{
+    font-family: Arial,'Microsoft Yahei','\5FAE\8F6F\96C5\9ED1','Hiragino Sans GB','\5B8B\4F53';
+    color:#666;
+    margin:0;
+    padding:0;
+}
+iframe {
+    border:0;
+}
+ul li {
+    list-style:none;
+}
+a{
+    text-decoration: none;
+    border:0;
+    color:#666;
+}
+div.t_w {
+    width:1200px;
+}
+div label.t_row_spit {
+    display: block;
+    float: left;
+    height: 25px;
+    position: absolute;
+    top: 50%;
+    margin-top: -12px;
+    border-left:2px solid #B1191A;
+    font: 16px/150% Arial,Verdana,"\5b8b\4f53";
+    color: #666;
+    line-height:25px;
+    text-indent: 15px;
+    font-weight: 600;
+}
+div.t_row_spit_panel{
+    width:98%;
+    margin:auto;
+    height:45px;
+    border-bottom:1px dashed #ccc;
+    position:relative
+}
