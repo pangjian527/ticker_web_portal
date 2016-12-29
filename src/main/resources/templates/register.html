@@ -66,7 +66,7 @@
             vertical-align: middle;
         }
         a.msgCode{
-            background: #e4e4e4;
+            background: #ccc;
             padding: 16px 38px;
             font-size: 14px;
             color: #333;
@@ -81,7 +81,7 @@
             var pwd = document.getElementById("pwd").value;
             var confirmPwd = document.getElementById("confirmPwd").value;
             var validCode = document.getElementById("validCode").value;
-            var msgCode = document.getElementById("msgCode").value;
+            var smsCode = document.getElementById("smsCode").value;
 
             if(mobile ==""){
                 alert("手机号码必填");
@@ -98,6 +98,9 @@
             }else if (validCode == ""){
                  alert("请输入图形验证码");
                  return ;
+            }else if (smsCode == ""){
+                 alert("请输入短信验证码");
+                 return ;
             }
 
 
@@ -105,7 +108,7 @@
                 url: "/portal/register/submit",
                 dataType:"json",
                 type:"post",
-                data:{"mobile":mobile,"pwd":pwd,"validCode":validCode,"confirmPwd":confirmPwd,"msgCode":msgCode},
+                data:{"mobile":mobile,"pwd":pwd,"validCode":validCode,"confirmPwd":confirmPwd,"smsCode":smsCode},
                 success: function(object){
                    if(object.ok == true){
                      alert("注册成功");
@@ -115,6 +118,80 @@
                    }
                 }
              });
+        }
+
+        function switchImage(){
+            $.ajax({
+                url: "/portal/login/switchcode",
+                data:{width:130},
+                dataType:"json",
+                type:"post",
+                success: function(object){
+                   if(object.ok == true){
+                        document.getElementById("valid").src = object.result;
+                   }else{
+                     alert(object.result);
+                   }
+                }
+             });
+        }
+
+        var t1 ;
+        function sendSms(){
+
+            var mobile = document.getElementById("mobile").value;
+            var validCode = document.getElementById("validCode").value;
+
+            if(validCode == ""){
+                alert("请填写图形验证码");
+                return ;
+            }
+
+            if(!(/^1[34578]\d{9}$/.test(mobile))){
+                alert("手机号码有误，请重填");
+                return ;
+            }
+
+            timeTask();
+
+            $.ajax({
+                url: "/portal/login/sendSms",
+                data:{mobile:mobile,validCode:validCode},
+                dataType:"json",
+                type:"post",
+                success: function(object){
+                   if(object.ok == true){
+
+                   }else{
+                        alert(object.result);
+                        resetTimeTask();
+                   }
+                }
+             });
+        }
+
+        var time = 60 ;
+        function timeTask(){
+            if(time>0){
+                time--;
+                document.getElementById("b_msgCode").onclick = function (){};
+                document.getElementById("b_msgCode").style.backgroundColor = "#e4e4e4";
+                document.getElementById("b_msgCode").style.color = "white";
+                document.getElementById("b_msgCode").innerText = "重新发送("+time+")";
+                t1 =setTimeout(timeTask,1000);
+            }else {
+                resetTimeTask();
+            }
+        }
+
+        function resetTimeTask(){
+            clearTimeout(t1);
+            time = 60;
+            document.getElementById("b_msgCode").onclick = sendSms
+            document.getElementById("b_msgCode").innerText = "发送验证码";
+            document.getElementById("b_msgCode").style.backgroundColor = "#ccc";
+            document.getElementById("b_msgCode").style.color = "black";
+
         }
     </script>
 
@@ -141,12 +218,12 @@
         <div class="t_i_panel ">
             <label>验&nbsp;证&nbsp;码：</label>
             <input placeholder="图形验证码" name="validCode" id="validCode" class="valid"/>
-            <img  class="valid" th:src="${valiBase64Image}"/>
+            <img id="valid" onclick="switchImage()" class="valid" th:src="${valiBase64Image}"/>
         </div>
         <div class="t_i_panel ">
             <label>手机验证码：</label>
             <input name="msgCode" id="msgCode" placeholder="短信验证码" class="valid"/>
-            <a class="msgCode" href="">获取验证码</a>
+            <a class="msgCode" id="b_msgCode" href="javascript:void()" onclick="sendSms()">发送验证码</a>
         </div>
         <a class="login_buttom" href="javascript:register()">注册</a>
         <div style="clear:both;"></div>

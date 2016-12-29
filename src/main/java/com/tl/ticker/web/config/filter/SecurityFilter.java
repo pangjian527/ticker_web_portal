@@ -34,18 +34,24 @@ public class SecurityFilter implements Filter{
             return;
         }
 
-        if (request.getSession().getAttribute(Constant.SESSION_USER) != null) {
+        String indexUrl = home + "/portal";
+        String loginUrl = "/portal/login";
+        if (uri.equals(indexUrl) ||loginUrl.equals(uri)|| "/portal/login/submit".equals(uri) ||"/portal/register/submit".equals(uri) ||"/portal/register".equals(uri)) {
             filterChain.doFilter(servletRequest, servletResponse);
             return;
         }
 
-        String indexUrl = home + "/portal";
-        if (uri.equals(indexUrl)|| "/portal/login/submit".equals(uri) ||"/portal/register/submit".equals(uri) || "/portal/login".equals(uri)||"/portal/register".equals(uri)) {
-            filterChain.doFilter(servletRequest, servletResponse);
+        if("/".equals(uri)){
+            response.sendRedirect(indexUrl);
+            return ;
+        }
+
+        if (request.getSession().getAttribute(Constant.SESSION_USER) == null) {
+            response.sendRedirect(loginUrl);
             return;
         }
-        System.out.println(indexUrl);
-        response.sendRedirect(indexUrl);
+
+        response.sendRedirect(loginUrl);
     }
 
     @Override

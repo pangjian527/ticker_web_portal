@@ -3,6 +3,8 @@ package com.tl.ticker.web.action;
 import com.tl.rpc.common.ServiceToken;
 import com.tl.rpc.consumer.Consumer;
 import com.tl.rpc.consumer.ConsumerService;
+import com.tl.rpc.msg.Msg;
+import com.tl.rpc.msg.MsgService;
 import com.tl.rpc.order.ORDERSTATUS;
 import com.tl.rpc.order.Order;
 import com.tl.rpc.order.OrderService;
@@ -11,6 +13,7 @@ import com.tl.rpc.product.ProductService;
 import com.tl.ticker.web.action.entity.ResultJson;
 import com.tl.ticker.web.common.Constant;
 import com.tl.ticker.web.util.JsonUtil;
+import com.tl.ticker.web.util.SmsUtil;
 import com.tl.ticker.web.util.ValidateCodeUtil;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,6 +64,11 @@ public class BuyAction {
             return JsonUtil.toString(new ResultJson(false, "验证码不正确"));
         }
 
+        String sessionSmsCode = session.getAttribute(Constant.SMS_VALID_CODE).toString();
+        if(!sessionSmsCode.equalsIgnoreCase(smsCode)){
+            return JsonUtil.toString(new ResultJson(false, "短信验证码不正确"));
+        }
+
         ServiceToken token = new ServiceToken();
         Product product = productService.getByProductId(token, productId);
 
@@ -86,10 +94,45 @@ public class BuyAction {
         return JsonUtil.toString(new ResultJson(true, "购买成功"));
     }
 
+    @RequestMapping("/portal/buy/sendSms")
+    @ResponseBody
+    public String sendSms(HttpSession session,String validCode) throws Exception{
+
+        Object object = session.getAttribute(Constant.SESSION_USER);
+
+        if(object == null){
+            return JsonUtil.toString(new ResultJson(false, "由于您太久没操作，请重新登录！"));
+        }
+
+        Consumer consumer = (Consumer)object;
+        String code = session.getAttribute(Constant.VALID_CODE).toString();
+
+        if(!code.equalsIgnoreCase(validCode)){
+            return JsonUtil.toString(new ResultJson(false, "验证码不正确"));
+        }
+
+        int random = SmsUtil.getRandom();
+        String smsContent = SmsUtil.getSmsContent(random);
+        SmsUtil.sendSms(consumer.getMobile(),smsContent);
+
+        session.setAttribute(Constant.SMS_VALID_CODE,random);
+
+        Msg msg = new Msg();
+        msg.setMobile(consumer.getMobile());
+        msg.setCreateTime(new Date().getTime());
+        msg.setContent(smsContent);
+
+        msgService.sendMsg(new ServiceToken(),msg);
+
+        return JsonUtil.toString(new ResultJson(true));
+    }
+
     @Autowired
     private ProductService productService;
     @Autowired
     private OrderService orderService;
     @Autowired
     private ConsumerService consumerService;
+    @Autowired
+    private MsgService msgService;
 }

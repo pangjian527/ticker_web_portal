@@ -233,7 +233,7 @@
 <body>
 <div th:include="common/header::header"></div>
 
-<div class="content flash-imgage">
+<div class="content flash-imgage" style="display:none">
     <div style="width:100%">
         <img width="100%" th:src="@{/images/banner_1.jpg}"/>
     </div>
@@ -262,7 +262,7 @@
             </tbody>
         </table>
     </div>
-    <div class="one_right">
+    <div class="one_right" >
         <table cellspacing="0" cellpadding="0">
             <thead>
             <tr>
@@ -275,7 +275,7 @@
             <tbody>
             <tr th:each="product,productStat:${listResult}">
                 <td style="text-align:left;">
-                    <div style="font-size:18px;"><a href="" th:text="${product.title}"> 123期经典六肖-经典六肖-经典六肖-经典六肖</a></div>
+                    <div style="font-size:18px;"><a th:href="'javascript:buy(\''+${product.id}+'\')'" th:text="${product.title}"> 123期经典六肖-经典六肖-经典六肖-经典六肖</a></div>
                     <div style="color:red;font-size:12px;" th:text="${product.probability}">中奖率：十期中9期</div>
                 </td>
                 <td><strong class="price" th:text="${product.balance}"> ￥1</strong></td>

@@ -3,9 +3,12 @@ package com.tl.ticker.web.action;
 import com.tl.rpc.common.ServiceToken;
 import com.tl.rpc.consumer.Consumer;
 import com.tl.rpc.consumer.ConsumerService;
+import com.tl.rpc.msg.Msg;
+import com.tl.rpc.msg.MsgService;
 import com.tl.ticker.web.action.entity.ResultJson;
 import com.tl.ticker.web.common.Constant;
 import com.tl.ticker.web.util.JsonUtil;
+import com.tl.ticker.web.util.SmsUtil;
 import com.tl.ticker.web.util.ValidateCodeUtil;
 import org.apache.commons.lang.StringUtils;
 import org.apache.thrift.TException;
@@ -16,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
+import java.util.Date;
 
 /**
  * Created by pangjian on 16-12-19.
@@ -89,7 +93,45 @@ public class LoginAction {
         }
     }
 
+    @RequestMapping("/portal/login/switchcode")
+    @ResponseBody
+    public String switchImageCode(Model model,HttpSession session,int width){
+        ValidateCodeUtil valiCode = new ValidateCodeUtil(width,40,4,150);
+
+        session.setAttribute(Constant.VALID_CODE,valiCode.getCode());
+
+        return JsonUtil.toString(new ResultJson(true, valiCode.getBase64Code()));
+    }
+
+    @RequestMapping("/portal/login/sendSms")
+    @ResponseBody
+    public String sendSms(HttpSession session,String mobile,String validCode) throws Exception{
+
+        String code = session.getAttribute(Constant.VALID_CODE).toString();
+
+        if(!code.equalsIgnoreCase(validCode)){
+            return JsonUtil.toString(new ResultJson(false, "验证码不正确"));
+        }
+
+        int random = SmsUtil.getRandom();
+        String smsContent = SmsUtil.getSmsContent(random);
+        SmsUtil.sendSms(mobile,smsContent);
+
+        session.setAttribute(Constant.SMS_VALID_CODE,random);
+
+        Msg msg = new Msg();
+        msg.setMobile(mobile);
+        msg.setCreateTime(new Date().getTime());
+        msg.setContent(smsContent);
+
+        msgService.sendMsg(new ServiceToken(),msg);
+
+        return JsonUtil.toString(new ResultJson(true));
+    }
 
     @Autowired
     private ConsumerService consumerService;
+
+    @Autowired
+    private MsgService msgService;
 }

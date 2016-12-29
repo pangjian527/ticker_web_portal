@@ -94,13 +94,30 @@
                 data:{"mobile":mobile,"pwd":pwd,"validCode":validCode},
                 success: function(object){
                    if(object.ok == true){
-                     window.location = "/portal/index";
+                     window.location = "/portal";
                    }else{
                      alert(object.result);
                    }
                 }
              });
         }
+
+        function switchImage(){
+            $.ajax({
+                url: "/portal/login/switchcode",
+                data:{width:130},
+                dataType:"json",
+                type:"post",
+                success: function(object){
+                   if(object.ok == true){
+                        document.getElementById("valid").src = object.result;
+                   }else{
+                     alert(object.result);
+                   }
+                }
+             });
+        }
+
     </script>
 
 </head>
@@ -121,7 +138,7 @@
         <div class="t_i_panel ">
             <label>验证码：</label>
             <input name="validCode" id="validCode" placeholder="验证码" class="valid"/>
-            <img class="valid" th:src="${valiBase64Image}"/>
+            <img class="valid" onclick="switchImage()" id="valid" th:src="${valiBase64Image}"/>
         </div>
         <div style="clear:both;"></div>
         <div style="margin-top:10px;">

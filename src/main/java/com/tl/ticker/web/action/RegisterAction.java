@@ -37,7 +37,8 @@ public class RegisterAction {
 
     @ResponseBody
     @RequestMapping("/portal/register/submit")
-    public String register(HttpSession session, String mobile, String pwd, String validCode,String msgCode,String confirmPwd) throws Exception {
+    public String register(HttpSession session, String mobile,
+                           String pwd, String validCode,String smsCode,String confirmPwd) throws Exception {
 
         if(StringUtils.isBlank(mobile)){
             return JsonUtil.toString(new ResultJson(false,"手机号码必填"));
@@ -49,9 +50,13 @@ public class RegisterAction {
         }
 
         String code = session.getAttribute(Constant.VALID_CODE).toString();
-
         if(!code.equalsIgnoreCase(validCode)){
             return JsonUtil.toString(new ResultJson(false, "验证码不正确"));
+        }
+
+        String sessionSmsCode = session.getAttribute(Constant.SMS_VALID_CODE).toString();
+        if(!sessionSmsCode.equalsIgnoreCase(smsCode)){
+            return JsonUtil.toString(new ResultJson(false, "短信验证码不正确"));
         }
 
         if(!pwd.equals(confirmPwd)){
