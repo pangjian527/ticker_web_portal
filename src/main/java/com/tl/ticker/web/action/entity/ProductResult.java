@@ -27,11 +27,13 @@ public class ProductResult {
 
     public String title;
 
-    public String mobile;
+    private String mobile;
 
     public int virtualCount;
 
     public String probability;
+
+    public int saleCount;
 
     public static ProductResult fromProductResult(Product product){
 
@@ -51,4 +53,17 @@ public class ProductResult {
 
         return result;
     }
+
+    public String getMobile() {
+
+        String preMobile = this.mobile.substring(0, 3);
+        String nextMobile = this.mobile.substring(7);
+
+        return preMobile+"****"+nextMobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
+
 }

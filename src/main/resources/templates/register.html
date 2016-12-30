@@ -82,6 +82,7 @@
             var confirmPwd = document.getElementById("confirmPwd").value;
             var validCode = document.getElementById("validCode").value;
             var smsCode = document.getElementById("smsCode").value;
+            var refereeId = document.getElementById("refereeId").value;
 
             if(mobile ==""){
                 alert("手机号码必填");
@@ -108,7 +109,7 @@
                 url: "/portal/register/submit",
                 dataType:"json",
                 type:"post",
-                data:{"mobile":mobile,"pwd":pwd,"validCode":validCode,"confirmPwd":confirmPwd,"smsCode":smsCode},
+                data:{"mobile":mobile,"pwd":pwd,"validCode":validCode,"confirmPwd":confirmPwd,"smsCode":smsCode,"refereeId":refereeId},
                 success: function(object){
                    if(object.ok == true){
                      alert("注册成功");
@@ -224,6 +225,10 @@
             <label>手机验证码：</label>
             <input name="msgCode" id="msgCode" placeholder="短信验证码" class="valid"/>
             <a class="msgCode" id="b_msgCode" href="javascript:void()" onclick="sendSms()">发送验证码</a>
+        </div>
+        <div class="t_i_panel ">
+            <label>推荐人：</label>
+            <input name="refereeId" id="refereeId" placeholder="推荐人手机"/>
         </div>
         <a class="login_buttom" href="javascript:register()">注册</a>
         <div style="clear:both;"></div>

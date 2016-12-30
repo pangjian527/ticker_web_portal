@@ -8,6 +8,7 @@ import com.tl.rpc.consumer.ConsumerService;
 import com.tl.rpc.lottery.LotteryData;
 import com.tl.rpc.lottery.LotteryDataService;
 import com.tl.rpc.lottery.SearchResult;
+import com.tl.rpc.order.OrderService;
 import com.tl.rpc.product.Product;
 import com.tl.rpc.product.ProductService;
 import com.tl.rpc.product.SearchProductResult;
@@ -46,11 +47,16 @@ public class IndexAction {
 
         //1. 获取商品资料数据
         ServiceToken token = new ServiceToken();
-        SearchProductResult productResult = productService.searchProduct(token, limit, offset);
+        SearchProductResult searchProductResult = productService.searchProduct(token, limit, offset);
 
         List<ProductResult> listResult = new LinkedList<ProductResult>();
-        for (Product product : productResult.getResult()) {
-            listResult.add(ProductResult.fromProductResult(product));
+        for (Product product : searchProductResult.getResult()) {
+
+            ProductResult productResult = ProductResult.fromProductResult(product);
+            int count = orderService.totalCountByProductId(token, product.getId());
+            productResult.saleCount = count + product.getVirtualCount();
+
+            listResult.add(productResult);
         }
 
         //2. 获取论坛数据
@@ -61,7 +67,7 @@ public class IndexAction {
 
             Consumer consumer = consumerService.getById(token, topic.getUserId());
             TopicResult topicResult = TopicResult.fromTopicResult(topic);
-            topicResult.mobile = consumer.getMobile();
+            topicResult.setMobile(consumer.getMobile());
 
             listTopicResult.add(topicResult);
         }
@@ -72,11 +78,25 @@ public class IndexAction {
 
         for (LotteryData lotteryData :searchResult.getResult()) {
 
-            BaseData baseData = baseDataService.getBaseDataById(token, lotteryData.getBaseDataId());
+            BaseData baseData = baseDataService.getBaseDataByNumber(token, lotteryData.getNumber(),lotteryData.getYear());
+
+            BaseData baseData1 = baseDataService.getBaseDataByNumber(token, lotteryData.getFlatNumber1(),lotteryData.getYear());
+            BaseData baseData2 = baseDataService.getBaseDataByNumber(token, lotteryData.getFlatNumber2(),lotteryData.getYear());
+            BaseData baseData3 = baseDataService.getBaseDataByNumber(token, lotteryData.getFlatNumber3(),lotteryData.getYear());
+            BaseData baseData4 = baseDataService.getBaseDataByNumber(token, lotteryData.getFlatNumber4(),lotteryData.getYear());
+            BaseData baseData5 = baseDataService.getBaseDataByNumber(token, lotteryData.getFlatNumber5(),lotteryData.getYear());
+            BaseData baseData6 = baseDataService.getBaseDataByNumber(token, lotteryData.getFlatNumber6(),lotteryData.getYear());
 
             LotteryDataResult result = LotteryDataResult.fromLotteryDataResult(lotteryData);
             result.colorCode = baseData.getColorCode();
             result.zodiacCode = baseData.getZodiacCode();
+
+            result.colorCode1 = baseData1.getColorCode();
+            result.colorCode2 = baseData2.getColorCode();
+            result.colorCode3 = baseData3.getColorCode();
+            result.colorCode4 = baseData4.getColorCode();
+            result.colorCode5 = baseData5.getColorCode();
+            result.colorCode6 = baseData6.getColorCode();
 
             lotteryDatas.add(result);
         }
@@ -101,9 +121,10 @@ public class IndexAction {
     private ConsumerService consumerService;
     @Autowired
     private LotteryDataService lotteryDataService;
-
     @Autowired
     private BaseDataService baseDataService;
+    @Autowired
+    private OrderService orderService;
 
 
 

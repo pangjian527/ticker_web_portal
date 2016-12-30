@@ -65,7 +65,7 @@ div.d_logo_l{
 
 
 div.one_left{
-    width:25%;
+    width:35%;
     float:left;
 }
 
@@ -82,16 +82,21 @@ div.one_left table thead td {
 div.one_left table tr td{
      text-align:center;
 }
-div.one_left table tr td{
+div.one_left table thead tr td{
     height:40px;
     border-right: 1px solid #e4e4e4;
     border-bottom: 1px solid #e4e4e4;
+}
+div.one_left table tbody tr td{
+    border-right: 1px solid #e4e4e4;
+    border-bottom: 1px solid #e4e4e4;
+    padding:5px 0;
 }
 
 div.one_right{
     float:left;
     height:100%;
-    width:75%;
+    width:65%;
 }
 div.one_right table{
     float:right;
@@ -101,7 +106,7 @@ div.one_right table td{
     height:40px;
     text-align:center;
     border-bottom: 1px solid #e4e4e4;
-    padding:0 10px;
+    padding:0 5px;
 }
 div.one_right table thead td {
     background: #f7f7f7;

@@ -4,10 +4,13 @@ import com.tl.rpc.common.ServiceToken;
 import com.tl.rpc.consumer.CONSUMERSTATUS;
 import com.tl.rpc.consumer.Consumer;
 import com.tl.rpc.consumer.ConsumerService;
+import com.tl.rpc.recharge.Recharge;
+import com.tl.rpc.recharge.RechargeService;
 import com.tl.ticker.web.action.entity.ResultJson;
 import com.tl.ticker.web.common.Constant;
 import com.tl.ticker.web.util.JsonUtil;
 import com.tl.ticker.web.util.ValidateCodeUtil;
+import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -38,7 +41,8 @@ public class RegisterAction {
     @ResponseBody
     @RequestMapping("/portal/register/submit")
     public String register(HttpSession session, String mobile,
-                           String pwd, String validCode,String smsCode,String confirmPwd) throws Exception {
+                           String pwd, String validCode,String
+                                       smsCode,String confirmPwd,String refereeId) throws Exception {
 
         if(StringUtils.isBlank(mobile)){
             return JsonUtil.toString(new ResultJson(false,"手机号码必填"));
@@ -81,12 +85,46 @@ public class RegisterAction {
         consumer.setPwd(pwd);
         consumer.setMobile(mobile);
         consumer.setUpdateTime(new Date().getTime());
+        consumer.setRefereeId(refereeId);
 
         consumerService.saveConsumer(new ServiceToken(),consumer);
+
+        //推荐送积分
+        recharge(mobile);
 
         return JsonUtil.toString(new ResultJson(true));
     }
 
+    private void recharge(String mobile ) throws Exception{
+
+        int giveAmount = 1;
+
+        try{
+            Consumer consumer = consumerService.getByMobile(new ServiceToken(),mobile);
+
+            ServiceToken token = new ServiceToken();
+            consumer.setBalance(consumer.getBalance() + giveAmount);
+            consumerService.saveConsumer(token,consumer);
+
+            rechargeService.saveRecharge(token,createRecharge(0,giveAmount,consumer.getId()));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    private Recharge createRecharge(long balance, long giveAmount, String userId){
+        Recharge recharge = new Recharge();
+        recharge.setCreateTime(new Date().getTime());
+        recharge.setAmount(balance);
+        recharge.setGiveAmount(giveAmount);
+        recharge.setSource("sys");
+        recharge.setUserId(userId);
+
+        return recharge;
+    }
+
     @Autowired
     private ConsumerService consumerService;
+    @Autowired
+    private RechargeService rechargeService;
 }

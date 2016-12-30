@@ -151,12 +151,16 @@
             background-color:#ccc;
          }
 
-         td i{
-            padding: 5px;
+         i.number{
             border-radius: 13px;
             color: white;
             font-size: 16px;
             font-weight: bold;
+            display: inline-block;
+            height: 25px;
+            width: 25px;
+            line-height: 25px;
+            text-align: center;
          }
          i.red{
             background:red;
@@ -180,7 +184,26 @@
             ilter:alpha(opacity=50);  /*支持 IE 浏览器*/
             -moz-opacity:0.50; /*支持 FireFox 浏览器*/
             opacity:0.50;  /*支持 Chrome, Opera, Safari 等浏览器*/
-            z-index:990;
+            z-index:990;td div
+         }
+
+         table{
+            color: #000000;
+         }
+         table tbody td{
+            font-size: 14px;
+         }
+         td.stage_time {
+            font-size: 12px;
+            color: #000000;
+         }
+         td.number{
+            font-size: 12px;
+            color: #000000;
+         }
+         td.number label {
+            height:30px;
+            line-height:30px;
          }
 
     </style>
@@ -249,15 +272,25 @@
                 <td width="20">期号</td>
                 <td width="20">特码</td>
                 <td width="20">生肖</td>
-                <td width="40">日期</td>
             </tr>
             </thead>
             <tbody>
             <tr th:each="lottery:${lotteryDatas}">
-                <td th:text="${lottery.stage}">215</td>
-                <td><i th:text="${lottery.number}" th:class="${lottery.colorCode}">30</i></td>
+                <td class="stage_time">
+                    <div th:text="${lottery.stage}+'期'">215</div>
+                    <div th:text="${#dates.format(lottery.lotteryDate,'yyy-MM-dd')}">2015-11-20</div>
+                    <label th:text="${lottery.week}"></label>
+                </td>
+                <td class="number">
+                    <i th:class="'number '+${lottery.colorCode1}" th:text="${lottery.flatNumber1}"></i>&nbsp;
+                    <i th:class="'number '+${lottery.colorCode2}" th:text="${lottery.flatNumber2}"></i>&nbsp;
+                    <i th:class="'number '+${lottery.colorCode3}" th:text="${lottery.flatNumber3}"></i>&nbsp;
+                    <i th:class="'number '+${lottery.colorCode4}" th:text="${lottery.flatNumber4}"></i>&nbsp;
+                    <i th:class="'number '+${lottery.colorCode5}" th:text="${lottery.flatNumber5}"></i>&nbsp;
+                    <i th:class="'number '+${lottery.colorCode6}" th:text="${lottery.flatNumber6}"></i>&nbsp;
+                    特：<i th:text="${lottery.number}" th:class="'number '+${lottery.colorCode}">30</i>
+                </td>
                 <td th:text="${lottery.zodiacCode}">马</td>
-                <td th:text="${#dates.format(lottery.lotteryDate,'yyy-MM-dd')}">2015-11-20</td>
             </tr>
             </tbody>
         </table>
@@ -269,18 +302,20 @@
                 <td width="auto" style="text-align:left">标题</td>
                 <td width="60">金额</td>
                 <td width="100">作者</td>
-                <td width="130">操作</td>
+                <td width="100">购买人数</td>
+                <td width="100">操作</td>
             </tr>
             </thead>
             <tbody>
             <tr th:each="product,productStat:${listResult}">
                 <td style="text-align:left;">
-                    <div style="font-size:18px;"><a th:href="'javascript:buy(\''+${product.id}+'\')'" th:text="${product.title}"> 123期经典六肖-经典六肖-经典六肖-经典六肖</a></div>
+                    <div style="font-size:16px;"><a th:href="'javascript:buy(\''+${product.id}+'\')'" th:text="${product.title}"> 123期经典六肖-经典六肖-经典六肖-经典六肖</a></div>
                     <div style="color:red;font-size:12px;" th:text="${product.probability}">中奖率：十期中9期</div>
                 </td>
                 <td><strong class="price" th:text="${product.balance}"> ￥1</strong></td>
                 <td th:text="${product.mobile}">135****9614</td>
-                <td><a class="buy" th:href="'javascript:buy(\''+${product.id}+'\')'">立即购买</a></td>
+                <td th:text="${product.saleCount}">100</td>
+                <td><a class="buy" th:href="'javascript:buy(\''+${product.id}+'\')'">团购</a></td>
             </tr>
             </tbody>
         </table>

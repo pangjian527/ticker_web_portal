@@ -11,7 +11,7 @@ public class TopicResult {
 
     public String title;
     public String content;
-    public String mobile;
+    private String mobile;
     public int readCount;
     public int replyCount;
     public String status;
@@ -41,4 +41,14 @@ public class TopicResult {
         return result;
     }
 
+    public String getMobile() {
+        String preMobile = this.mobile.substring(0, 3);
+        String nextMobile = this.mobile.substring(7);
+
+        return preMobile+"****"+nextMobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
 }

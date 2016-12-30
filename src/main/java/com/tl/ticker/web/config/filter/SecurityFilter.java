@@ -36,7 +36,9 @@ public class SecurityFilter implements Filter{
 
         String indexUrl = home + "/portal";
         String loginUrl = "/portal/login";
-        if (uri.equals(indexUrl) ||loginUrl.equals(uri)|| "/portal/login/submit".equals(uri) ||"/portal/register/submit".equals(uri) ||"/portal/register".equals(uri)) {
+        if (uri.equals(indexUrl) ||loginUrl.equals(uri)||
+                "/portal/login/submit".equals(uri) ||"/portal/register/submit".equals(uri) ||
+                "/portal/register".equals(uri)||"/portal/login/check".equals(uri)) {
             filterChain.doFilter(servletRequest, servletResponse);
             return;
         }

@@ -47,7 +47,7 @@ public class TopicAction {
 
         Consumer consumer = consumerService.getById(token, topic.getUserId());
         TopicResult topicResult = TopicResult.fromTopicResult(topic);
-        topicResult.mobile = consumer.getMobile();
+        topicResult.setMobile(consumer.getMobile());
 
         int offset = StrFunUtil.valueInt(request.getParameter("offset"),0);
         int limit = StrFunUtil.valueInt(request.getParameter("limit"),15);
