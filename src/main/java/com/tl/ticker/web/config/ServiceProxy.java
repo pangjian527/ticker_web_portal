@@ -33,6 +33,6 @@ public class ServiceProxy<T> implements FactoryBean{
 
 
     public boolean isSingleton() {
-        return false;
+        return true;
     }
 }

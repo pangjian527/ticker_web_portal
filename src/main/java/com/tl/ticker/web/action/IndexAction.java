@@ -43,7 +43,7 @@ public class IndexAction {
     public String execute(Model model, HttpServletRequest request, HttpSession session) throws Exception{
 
         int offset = StrFunUtil.valueInt(request.getParameter("offset"),0);
-        int limit = StrFunUtil.valueInt(request.getParameter("limit"),10);
+        int limit = StrFunUtil.valueInt(request.getParameter("limit"),50);
 
         //1. 获取商品资料数据
         ServiceToken token = new ServiceToken();
@@ -60,7 +60,7 @@ public class IndexAction {
         }
 
         //2. 获取论坛数据
-        SearchTopicResult topicResultList = topicService.searchTopic(token, 30, 0, TOPICSTATUS.OPEN);
+        SearchTopicResult topicResultList = topicService.searchTopic(token, 50, 0, TOPICSTATUS.OPEN);
 
         List<TopicResult> listTopicResult = new LinkedList<TopicResult>();
         for (Topic topic : topicResultList.getResult()) {

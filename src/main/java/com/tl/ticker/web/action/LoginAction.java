@@ -77,7 +77,7 @@ public class LoginAction {
     @RequestMapping("/portal/logout")
     public String logout(HttpSession session){
         session.invalidate();
-        return "login";
+        return "redirect:/portal/login";
     }
 
     @ResponseBody

@@ -33,10 +33,15 @@ public class SecurityFilter implements Filter{
             filterChain.doFilter(servletRequest, servletResponse);
             return;
         }
-
-        String indexUrl = home + "/portal";
         String loginUrl = "/portal/login";
-        if (uri.equals(indexUrl) ||loginUrl.equals(uri)||
+        if (request.getSession().getAttribute(Constant.SESSION_USER) != null) {
+            filterChain.doFilter(servletRequest, servletResponse);
+            return;
+        }
+        String indexUrl = home + "/portal";
+
+        if ("/portal/login/sendSms".equals(uri)||"/portal/login/switchcode".equals(uri)
+                ||"/portal/logout".equals(uri) ||uri.equals(indexUrl) ||loginUrl.equals(uri)||
                 "/portal/login/submit".equals(uri) ||"/portal/register/submit".equals(uri) ||
                 "/portal/register".equals(uri)||"/portal/login/check".equals(uri)) {
             filterChain.doFilter(servletRequest, servletResponse);
@@ -46,11 +51,6 @@ public class SecurityFilter implements Filter{
         if("/".equals(uri)){
             response.sendRedirect(indexUrl);
             return ;
-        }
-
-        if (request.getSession().getAttribute(Constant.SESSION_USER) == null) {
-            response.sendRedirect(loginUrl);
-            return;
         }
 
         response.sendRedirect(loginUrl);

@@ -32,7 +32,7 @@ public class RegisterAction {
 
         ValidateCodeUtil valiCode = new ValidateCodeUtil(130,40,4,150);
 
-        model.addAttribute("valiBase64Image","data:image/jpg;base64"+valiCode.getBase64Code());
+        model.addAttribute("valiBase64Image",valiCode.getBase64Code());
         session.setAttribute(Constant.VALID_CODE,valiCode.getCode());
 
         return "register";

@@ -1,6 +1,8 @@
 package com.tl.ticker.web.action.entity;
 
 import com.tl.rpc.product.Product;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 import java.util.Date;
 
@@ -64,6 +66,23 @@ public class ProductResult {
 
     public void setMobile(String mobile) {
         this.mobile = mobile;
+    }
+
+    public String getSendSmsContent(){
+        JSONArray jsonArray = JSONArray.fromObject(this.expect);
+
+        StringBuilder content = new StringBuilder("【皇家团购】你的资料是：");
+
+        for (int i=0 ;i<jsonArray.size();i++) {
+            JSONObject jsonObject = jsonArray.getJSONObject(i);
+            content.append(jsonObject.getString("name")+"、");
+            /*JSONArray numbers = jsonObject.getJSONArray("numbers");
+
+            for (int j=0 ;j<numbers.size();j++){
+                content.append(numbers.getInt(j)).append("、");
+            }*/
+        }
+        return content.toString();
     }
 
 }

@@ -7,10 +7,7 @@ import com.tl.rpc.reply.REPLYSTATUS;
 import com.tl.rpc.reply.Reply;
 import com.tl.rpc.reply.ReplyService;
 import com.tl.rpc.reply.SearchReplyResult;
-import com.tl.rpc.topic.TOPICSTATUS;
-import com.tl.rpc.topic.TOPICTYPE;
-import com.tl.rpc.topic.Topic;
-import com.tl.rpc.topic.TopicService;
+import com.tl.rpc.topic.*;
 import com.tl.ticker.web.action.entity.PageResult;
 import com.tl.ticker.web.action.entity.ReplyResult;
 import com.tl.ticker.web.action.entity.ResultJson;
@@ -140,7 +137,31 @@ public class TopicAction {
 
         topicService.saveTopic(token,topic);
 
-        return ResultJson.returnSuccess("发表成功",model);
+        return "redirect:/portal/topic/search";
+    }
+
+    @RequestMapping("/portal/topic/search")
+    public String search(Model model,HttpServletRequest request) throws Exception{
+        int offset = StrFunUtil.valueInt(request.getParameter("offset"),0);
+        int limit = StrFunUtil.valueInt(request.getParameter("limit"),50);
+
+        ServiceToken token = new ServiceToken();
+        SearchTopicResult topicResultList = topicService.searchTopic(token, limit, offset, TOPICSTATUS.OPEN);
+
+        List<TopicResult> listTopicResult = new LinkedList<TopicResult>();
+        for (Topic topic : topicResultList.getResult()) {
+
+            Consumer consumer = consumerService.getById(token, topic.getUserId());
+            TopicResult topicResult = TopicResult.fromTopicResult(topic);
+            topicResult.setMobile(consumer.getMobile());
+
+            listTopicResult.add(topicResult);
+        }
+
+        String url = "/portal/topic/search";
+        model.addAttribute("pageResult",new PageResult(topicResultList.getTotalCount(),limit,offset,url));
+        model.addAttribute("listTopicResult",listTopicResult);
+        return "topic/topic_list";
     }
 
 

@@ -235,9 +235,7 @@
     </div>
     <div class="page_panel">
         <ul class="pagination pagination-lg">
-            <li><a href="#">上一页</a></li>
             <li th:each="url,urlStat:${pageResult.pageUrls}"><a th:href="${url}" th:text="(${urlStat.index}+1)"></a></li>
-            <li><a href="#">下一页</a></li>
         </ul>
     </div>
     <div class="content t_w">

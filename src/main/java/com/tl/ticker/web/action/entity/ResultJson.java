@@ -58,6 +58,6 @@ public class ResultJson {
 
     public static String returnSuccess(String content,Model model){
         model.addAttribute("content",content);
-        return "/common/result";
+        return "common/result";
     }
 }

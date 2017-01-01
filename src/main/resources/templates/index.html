@@ -269,9 +269,9 @@
         <table cellpadding="0" cellspacing="0">
             <thead>
             <tr>
-                <td width="20">期号</td>
+                <td width="20%">期号</td>
                 <td width="20">特码</td>
-                <td width="20">生肖</td>
+                <td width="10%">生肖</td>
             </tr>
             </thead>
             <tbody>
@@ -309,8 +309,8 @@
             <tbody>
             <tr th:each="product,productStat:${listResult}">
                 <td style="text-align:left;">
-                    <div style="font-size:16px;"><a th:href="'javascript:buy(\''+${product.id}+'\')'" th:text="${product.title}"> 123期经典六肖-经典六肖-经典六肖-经典六肖</a></div>
-                    <div style="color:red;font-size:12px;" th:text="${product.probability}">中奖率：十期中9期</div>
+                    <div style="font-size:16px;line-height: 25px;"><a th:href="'javascript:buy(\''+${product.id}+'\')'" th:text="${product.title}"> 123期经典六肖-经典六肖-经典六肖-经典六肖</a></div>
+                    <div style="color:red;font-size:12px;line-height: 20px;" th:text="${product.probability}">中奖率：十期中9期</div>
                 </td>
                 <td><strong class="price" th:text="${product.balance}"> ￥1</strong></td>
                 <td th:text="${product.mobile}">135****9614</td>
@@ -325,7 +325,7 @@
 
 <div class="content t_w" style="margin:auto;height:45px;border-bottom:1px solid #ccc;position:relative">
     <label class="t_row_spit">资料专区</label>
-    <a class="tip_op" href="">查看更多</a>
+    <a class="tip_op" href="/portal/topic/search">查看更多</a>
 </div>
 
 <div class="content t_w topic">

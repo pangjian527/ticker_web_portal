@@ -10,6 +10,7 @@ import com.tl.rpc.order.Order;
 import com.tl.rpc.order.OrderService;
 import com.tl.rpc.product.Product;
 import com.tl.rpc.product.ProductService;
+import com.tl.ticker.web.action.entity.ProductResult;
 import com.tl.ticker.web.action.entity.ResultJson;
 import com.tl.ticker.web.common.Constant;
 import com.tl.ticker.web.util.JsonUtil;
@@ -53,7 +54,7 @@ public class BuyAction {
                          String productId,
                          String validCode,String smsCode) throws Exception{
 
-         if(StringUtils.isBlank(validCode)){
+        if(StringUtils.isBlank(validCode)){
             return JsonUtil.toString(new ResultJson(false,"请填写图形验证码"));
         }else if(StringUtils.isBlank(smsCode)) {
             return JsonUtil.toString(new ResultJson(false, "请填写短信验证码"));
@@ -90,6 +91,10 @@ public class BuyAction {
 
         consumer.setBalance(consumer.getBalance()-product.getBalance());
         consumerService.saveConsumer(token,consumer);
+
+        ProductResult productResult = ProductResult.fromProductResult(product);
+
+        SmsUtil.sendSms(consumer.getMobile(),productResult.getSendSmsContent());
 
         return JsonUtil.toString(new ResultJson(true, "购买成功"));
     }
