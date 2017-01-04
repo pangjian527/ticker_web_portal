@@ -43,7 +43,7 @@ public class IndexAction {
     public String execute(Model model, HttpServletRequest request, HttpSession session) throws Exception{
 
         int offset = StrFunUtil.valueInt(request.getParameter("offset"),0);
-        int limit = StrFunUtil.valueInt(request.getParameter("limit"),50);
+        int limit = StrFunUtil.valueInt(request.getParameter("limit"),10);
 
         //1. 获取商品资料数据
         ServiceToken token = new ServiceToken();
@@ -73,7 +73,7 @@ public class IndexAction {
         }
 
         //3. 获取基础开奖数据
-        SearchResult searchResult = lotteryDataService.searchLotteryData(token, 2016, 30, 0);
+        SearchResult searchResult = lotteryDataService.searchLotteryData(token, 2016, 15, 0);
         List<LotteryDataResult> lotteryDatas = new LinkedList<LotteryDataResult>();
 
         for (LotteryData lotteryData :searchResult.getResult()) {
@@ -111,6 +111,11 @@ public class IndexAction {
         model.addAttribute("lotteryDatas",lotteryDatas);
         model.addAttribute("listTopicResult",listTopicResult);
         return "index";
+    }
+
+    @RequestMapping("/portal/contact")
+    public String contact(){
+        return "line";
     }
 
     @Autowired

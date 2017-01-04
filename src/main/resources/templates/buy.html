@@ -236,6 +236,10 @@
 
         }
 
+        function line_contact(){
+            window.parent.location = "/portal/contact";
+        }
+
     </script>
 
 </head>
@@ -255,7 +259,7 @@
                     历史战绩：<label th:text="${product.probability}">10中8</label>
                 </li>
                 <li>
-                    购买人数：<label th:text="${product.virtualCount}">688</label>
+                    购买人数：<label th:text="${product.saleCount}">688</label>
                 </li>
                 <li>
                     开奖期数：<label th:text="${product.year}+'年'+${product.stage}+'期'">2016-11-30 21:30</label>
@@ -278,7 +282,7 @@
     <div class="b_f_form">
         <div class="u_balance">
             <label>可用金币：￥<b th:text="${#numbers.formatDecimal(consumer.balance,1,2)}">0.00</b></label>
-            <a href="">余额充值</a>
+            <a href="javascript:void()" onclick="line_contact()">余额充值</a>
         </div>
         <div class="b_i_form">
             <label>验证码：</label>
@@ -295,6 +299,7 @@
             <a class="cancel" href="javascript:cancel()">取消</a>
             <a href="javascript:buy()">购买</a>
         </div>
+        <div style="padding-left: 16px;color:red;margin-top: 30px;font-weight: bold;">平台承诺：若购买资料后不中奖，自动退回账户余额</div>
     </div>
 </div>
 </body>

@@ -35,15 +35,21 @@ public class BuyAction {
     @RequestMapping("/portal/buy")
     public String execute(String id, Model model, HttpSession session) throws Exception{
 
+        ServiceToken token = new ServiceToken();
         Object consumer = session.getAttribute(Constant.SESSION_USER);
-        Product product = productService.getByProductId(new ServiceToken(), id);
+        Product product = productService.getByProductId(token, id);
+
+
+        ProductResult productResult = ProductResult.fromProductResult(product);
+        int count = orderService.totalCountByProductId(token, product.getId());
+        productResult.saleCount = count + product.getVirtualCount();
 
         ValidateCodeUtil valiCode = new ValidateCodeUtil(95,40,4,150);
 
         model.addAttribute("valiBase64Image","data:image/jpg;base64"+valiCode.getBase64Code());
         session.setAttribute(Constant.VALID_CODE,valiCode.getCode());
 
-        model.addAttribute("product",product);
+        model.addAttribute("product",productResult);
         model.addAttribute("consumer",consumer);
         return "buy";
     }

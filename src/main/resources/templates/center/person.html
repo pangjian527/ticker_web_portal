@@ -143,7 +143,7 @@
             <div class="p_center_head">
                 <img src="https://static.360buyimg.com/finance/assets/common/1.3.0/css/i/user-logo.jpg" />
             </div>
-            <p class="p_account">135****9614</p>
+            <p class="p_account" th:text="${session.session_user_code.mobile}">135****9614</p>
             <ul class="p_center_menu">
                 <li>
                     <a href="/portal/center?code=order" th:class="${orderList==null}?'':'active'">我的订单</a>

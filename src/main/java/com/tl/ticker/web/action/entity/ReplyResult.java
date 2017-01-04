@@ -15,7 +15,7 @@ public class ReplyResult {
 
     public String userId;
 
-    public String mobile;
+    private String mobile;
 
     public Date createTime;
 
@@ -34,6 +34,17 @@ public class ReplyResult {
         replyResult.status = reply.getStatus().name();
 
         return replyResult;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
+
+    public String getMobile() {
+        String preMobile = this.mobile.substring(0, 3);
+        String nextMobile = this.mobile.substring(7);
+
+        return preMobile+"****"+nextMobile;
     }
 
 }

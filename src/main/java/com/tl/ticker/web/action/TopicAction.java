@@ -57,7 +57,7 @@ public class TopicAction {
 
             ReplyResult replyResult = ReplyResult.fromReply(reply);
             Consumer repConsumer = consumerService.getById(token, reply.getUserId());
-            replyResult.mobile = repConsumer.getMobile();
+            replyResult.setMobile(repConsumer.getMobile());
             replyResults.add(replyResult);
         }
 
