@@ -302,7 +302,7 @@
                 <td width="auto" style="text-align:left">标题</td>
                 <td width="60">金额</td>
                 <td width="100">作者</td>
-                <td width="100">购买人数</td>
+                <td width="130">购买人数/限购</td>
                 <td width="100">操作</td>
             </tr>
             </thead>
@@ -314,7 +314,10 @@
                 </td>
                 <td><strong class="price" th:text="${product.balance}"> ￥1</strong></td>
                 <td th:text="${product.mobile}">135****9614</td>
-                <td th:text="${product.saleCount}">100</td>
+                <td>
+                    <span th:text="${product.saleCount}"></span>/
+                    <span style="color:red;font-weight:bold;" th:text="${product.limitCount}"></span>
+                </td>
                 <td><a class="buy" th:href="'javascript:buy(\''+${product.id}+'\')'">团购</a></td>
             </tr>
             </tbody>

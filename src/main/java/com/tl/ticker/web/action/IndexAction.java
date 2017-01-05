@@ -73,7 +73,16 @@ public class IndexAction {
         }
 
         //3. 获取基础开奖数据
-        SearchResult searchResult = lotteryDataService.searchLotteryData(token, 2016, 15, 0);
+        SearchResult searchResult = lotteryDataService.searchLotteryData(token, 0, 15, 0);
+
+        List<LotteryData> searchList = searchResult.getResult();
+
+        /*if(searchResult.getTotalCount()<15){
+            int limitOld = 15 - searchResult.getTotalCount();
+            SearchResult search2016Result =lotteryDataService.searchLotteryData(token, 2016, limitOld, 0);
+
+            searchList.addAll(search2016Result.getResult());
+        }*/
         List<LotteryDataResult> lotteryDatas = new LinkedList<LotteryDataResult>();
 
         for (LotteryData lotteryData :searchResult.getResult()) {

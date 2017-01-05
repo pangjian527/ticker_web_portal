@@ -37,6 +37,8 @@ public class ProductResult {
 
     public int saleCount;
 
+    public int limitCount;
+
     public static ProductResult fromProductResult(Product product){
 
         ProductResult result = new ProductResult();
@@ -52,6 +54,7 @@ public class ProductResult {
         result.status = product.getStatus().name();
         result.virtualCount = product.getVirtualCount();
         result.probability = product.getProbability();
+        result.limitCount = product.getLimitCount();
 
         return result;
     }

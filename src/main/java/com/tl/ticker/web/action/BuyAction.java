@@ -85,6 +85,12 @@ public class BuyAction {
             return JsonUtil.toString(new ResultJson(false, "余额不足，请充值"));
         }
 
+        int saleCount = orderService.totalCountByProductId(token, product.getId()) +product.getVirtualCount();
+
+        if(saleCount >= product.getLimitCount()){
+            return JsonUtil.toString(new ResultJson(false, "此资料限制"+saleCount+"人购买！下次请早点来哦"));
+        }
+
         Order order = new Order();
         order.setProductId(productId);
         order.setCreateTime(new Date().getTime());

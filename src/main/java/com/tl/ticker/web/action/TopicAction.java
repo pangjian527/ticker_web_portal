@@ -94,6 +94,7 @@ public class TopicAction {
 
         Topic topic = topicService.getByTopicId(token, topicId);
         topic.setReplyCount(topic.getReadCount()+1);
+        topic.setUpdateTime(new Date().getTime());
 
         topicService.saveTopic(token,topic);
 
@@ -134,6 +135,7 @@ public class TopicAction {
         topic.setTitle(title);
         topic.setReplyCount(0);
         topic.setReadCount(0);
+        topic.setUpdateTime(new Date().getTime());
 
         topicService.saveTopic(token,topic);
 
