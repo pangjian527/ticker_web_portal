@@ -74,11 +74,11 @@ public class ProductResult {
     public String getSendSmsContent(){
         JSONArray jsonArray = JSONArray.fromObject(this.expect);
 
-        StringBuilder content = new StringBuilder("【皇家团购】你的资料是：");
+        StringBuilder content = new StringBuilder("【皇家团购】");
 
         for (int i=0 ;i<jsonArray.size();i++) {
             JSONObject jsonObject = jsonArray.getJSONObject(i);
-            content.append(jsonObject.getString("name")+"、");
+            content.append(jsonObject.getString("name")+"：");
             JSONArray numbers = jsonObject.getJSONArray("numbers");
 
             for (int j=0 ;j<numbers.size();j++){
