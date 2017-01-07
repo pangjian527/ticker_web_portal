@@ -79,11 +79,11 @@ public class ProductResult {
         for (int i=0 ;i<jsonArray.size();i++) {
             JSONObject jsonObject = jsonArray.getJSONObject(i);
             content.append(jsonObject.getString("name")+"、");
-            /*JSONArray numbers = jsonObject.getJSONArray("numbers");
+            JSONArray numbers = jsonObject.getJSONArray("numbers");
 
             for (int j=0 ;j<numbers.size();j++){
                 content.append(numbers.getInt(j)).append("、");
-            }*/
+            }
         }
         return content.toString();
     }

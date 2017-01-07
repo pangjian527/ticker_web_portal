@@ -60,7 +60,7 @@ public class IndexAction {
         }
 
         //2. 获取论坛数据
-        SearchTopicResult topicResultList = topicService.searchTopic(token, 50, 0, TOPICSTATUS.OPEN);
+        SearchTopicResult topicResultList = topicService.searchTopic(token, 50, 0, TOPICSTATUS.OPEN,null);
 
         List<TopicResult> listTopicResult = new LinkedList<TopicResult>();
         for (Topic topic : topicResultList.getResult()) {

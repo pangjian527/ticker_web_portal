@@ -16,6 +16,7 @@ import com.tl.ticker.web.common.Constant;
 import com.tl.ticker.web.util.JsonUtil;
 import com.tl.ticker.web.util.StrFunUtil;
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -124,17 +125,20 @@ public class TopicAction {
             return "redirect:/portal/login";
         }
 
+        Consumer consumer = (Consumer)object;
+
         ServiceToken token = new ServiceToken();
 
         Topic topic = new Topic();
         topic.setCreateTime(new Date().getTime());
+        topic.setUpdateTime(new Date().getTime());
         topic.setType(TOPICTYPE.CHARGE);
         topic.setStatus(TOPICSTATUS.OPEN);
-        topic.setUserId("1");
         topic.setContent(content);
         topic.setTitle(title);
         topic.setReplyCount(0);
         topic.setReadCount(0);
+        topic.setUserId(consumer.getId());
         topic.setUpdateTime(new Date().getTime());
 
         topicService.saveTopic(token,topic);
@@ -145,10 +149,11 @@ public class TopicAction {
     @RequestMapping("/portal/topic/search")
     public String search(Model model,HttpServletRequest request) throws Exception{
         int offset = StrFunUtil.valueInt(request.getParameter("offset"),0);
-        int limit = StrFunUtil.valueInt(request.getParameter("limit"),50);
+        int limit = StrFunUtil.valueInt(request.getParameter("limit"),30);
+        String mobile = request.getParameter("mobile") ==null ?"":request.getParameter("mobile");
 
         ServiceToken token = new ServiceToken();
-        SearchTopicResult topicResultList = topicService.searchTopic(token, limit, offset, TOPICSTATUS.OPEN);
+        SearchTopicResult topicResultList = topicService.searchTopic(token, limit, offset, TOPICSTATUS.OPEN,mobile);
 
         List<TopicResult> listTopicResult = new LinkedList<TopicResult>();
         for (Topic topic : topicResultList.getResult()) {
@@ -160,9 +165,10 @@ public class TopicAction {
             listTopicResult.add(topicResult);
         }
 
-        String url = "/portal/topic/search";
+        String url = "/portal/topic/search?mobile="+mobile;
         model.addAttribute("pageResult",new PageResult(topicResultList.getTotalCount(),limit,offset,url));
         model.addAttribute("listTopicResult",listTopicResult);
+        model.addAttribute("mobile",mobile);
         return "topic/topic_list";
     }
 

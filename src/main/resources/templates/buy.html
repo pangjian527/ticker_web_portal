@@ -188,7 +188,7 @@
         function sendSms(){
 
             var validCode = document.getElementById("validCode").value;
-
+            var productId = document.getElementById("productId").value;
             if(validCode == ""){
                 alert("请填写图形验证码");
                 return ;
@@ -198,7 +198,7 @@
 
             $.ajax({
                 url: "/portal/buy/sendSms",
-                data:{validCode:validCode},
+                data:{validCode:validCode,productId:productId},
                 dataType:"json",
                 type:"post",
                 success: function(object){

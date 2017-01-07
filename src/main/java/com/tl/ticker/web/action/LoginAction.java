@@ -60,7 +60,7 @@ public class LoginAction {
         Consumer consumer = null ;
         try{
             consumer = consumerService.getByMobile(new ServiceToken(),mobile);
-        }catch (TException e){
+        }catch (Exception e){
             e.printStackTrace();
             return JsonUtil.toString(new ResultJson(false, "用户不存在"));
         }

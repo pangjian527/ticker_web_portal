@@ -37,7 +37,11 @@ public class PageResult {
 
     public List<String> getPageUrls(){
         for (int i=0 ;i<this.getPageCount();i++){
-            this.pageUrls.add(url + "?offset=" + (i*this.limit));
+            if(url.indexOf("?")>=0){
+                this.pageUrls.add(url + "&offset=" + (i*this.limit));
+            }else{
+                this.pageUrls.add(url + "?offset=" + (i*this.limit));
+            }
         }
         return this.pageUrls;
     }

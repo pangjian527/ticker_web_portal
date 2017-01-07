@@ -113,7 +113,15 @@ public class BuyAction {
 
     @RequestMapping("/portal/buy/sendSms")
     @ResponseBody
-    public String sendSms(HttpSession session,String validCode) throws Exception{
+    public String sendSms(HttpSession session,String validCode,String productId) throws Exception{
+
+        ServiceToken token = new ServiceToken();
+        Product product = productService.getByProductId(token, productId);
+        int saleCount = orderService.totalCountByProductId(token, product.getId()) +product.getVirtualCount();
+
+        if(saleCount >= product.getLimitCount()){
+            return JsonUtil.toString(new ResultJson(false, "此资料限制"+saleCount+"人购买！下次请早点来哦"));
+        }
 
         Object object = session.getAttribute(Constant.SESSION_USER);
 
