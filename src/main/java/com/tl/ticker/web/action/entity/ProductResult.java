@@ -1,6 +1,7 @@
 package com.tl.ticker.web.action.entity;
 
 import com.tl.rpc.product.Product;
+import com.tl.ticker.web.common.Constant;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
@@ -72,20 +73,36 @@ public class ProductResult {
     }
 
     public String getSendSmsContent(){
-        JSONArray jsonArray = JSONArray.fromObject(this.expect);
-
         StringBuilder content = new StringBuilder("【皇家团购】");
+        JSONObject object = JSONObject.fromObject(this.expect);
 
-        for (int i=0 ;i<jsonArray.size();i++) {
-            JSONObject jsonObject = jsonArray.getJSONObject(i);
-            content.append(jsonObject.getString("name")+"：");
-            JSONArray numbers = jsonObject.getJSONArray("numbers");
+        if(object.getInt("type") ==0){
+            JSONArray jsonArray = object.getJSONArray("items");
+            for (int i=0 ;i<jsonArray.size();i++) {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                content.append(jsonObject.getString("name")+":");
+                JSONArray numbers = jsonObject.getJSONArray("numbers");
 
-            for (int j=0 ;j<numbers.size();j++){
-                content.append(numbers.getInt(j)).append("、");
+                for (int j=0 ;j<numbers.size();j++){
+                    content.append(numbers.getInt(j)).append("、");
+                }
             }
+            return content.toString();
+        }else if (object.getInt("type") ==1){
+
+            String sizeType = object.getString("sizeType");
+            return content.append("彩票类型（大小单双）："+ Constant.getSizeType(sizeType)).toString();
+
+        }else if (object.getInt("type") == 2){
+            JSONArray array = object.getJSONArray("colorType");
+
+            String result = "";
+            for (int i=0 ;i<array.size();i++){
+                result += Constant.getColorType(array.getString(i))+"、";
+            }
+            return content.append("波色类型："+result).toString();
         }
-        return content.toString();
+        return "请联系管理员";
     }
 
 }
