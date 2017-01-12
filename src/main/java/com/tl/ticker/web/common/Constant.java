@@ -30,7 +30,7 @@ public class Constant {
         Map<String,String> map = new HashMap<String, String>();
         map.put("red","红波");
         map.put("green","绿波");
-        map.put("blue","蓝");
+        map.put("blue","蓝波");
 
         return map.get(colorCode);
     }
