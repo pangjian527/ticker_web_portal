@@ -52,14 +52,15 @@ public class RegisterAction {
             System.out.println(JsonUtil.toString(new ResultJson(false, "请填写验证码")));
             return JsonUtil.toString(new ResultJson(false, "请填写验证码"));
         }
+        Object valiObject = session.getAttribute(Constant.VALID_CODE);
 
-        String code = session.getAttribute(Constant.VALID_CODE).toString();
-        if(!code.equalsIgnoreCase(validCode)){
+        if(valiObject == null ||!valiObject.toString().equalsIgnoreCase(validCode)){
             return JsonUtil.toString(new ResultJson(false, "验证码不正确"));
         }
 
-        String sessionSmsCode = session.getAttribute(Constant.SMS_VALID_CODE).toString();
-        if(!sessionSmsCode.equalsIgnoreCase(smsCode)){
+        Object smsObject = session.getAttribute(Constant.SMS_VALID_CODE);
+
+        if(smsObject == null ||!smsObject.toString().equalsIgnoreCase(smsCode)){
             return JsonUtil.toString(new ResultJson(false, "短信验证码不正确"));
         }
 

@@ -77,6 +77,8 @@
 
         function register(){
 
+            document.getElementById('login_buttom').onclick = function(){};
+
             var mobile = document.getElementById("mobile").value;
             var pwd = document.getElementById("pwd").value;
             var confirmPwd = document.getElementById("confirmPwd").value;
@@ -111,6 +113,7 @@
                 type:"post",
                 data:{"mobile":mobile,"pwd":pwd,"validCode":validCode,"confirmPwd":confirmPwd,"smsCode":smsCode,"refereeId":refereeId},
                 success: function(object){
+                   document.getElementById('login_buttom').onclick = register;
                    if(object.ok == true){
                      alert("注册成功");
                      window.location = "/portal/login";
@@ -230,7 +233,7 @@
             <label>推荐人：</label>
             <input name="refereeId" id="refereeId" placeholder="推荐人手机"/>
         </div>
-        <a class="login_buttom" href="javascript:register()">注册</a>
+        <a class="login_buttom" id="login_buttom" onclick="register()" href="javascript:void()">注册</a>
         <div style="clear:both;"></div>
     </div>
     <div th:include="common/footer::footer"></div>
