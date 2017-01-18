@@ -26,6 +26,42 @@
             padding:5px;
         }
 
+        div.iframe_video{
+            width:640px;
+            position:fixed;
+            margin-left:-400px;
+            left:50%;
+            margin-top:-250px;
+            top:50%;
+            z-index:1000;
+            background-color:white;
+            height:360px;
+            border:2px solid #ccc;
+            border-top:2px solid #ff4a00;
+            padding:5px;
+        }
+
+        div.iframe_video a {
+            position: absolute;
+            display: block;
+            width: 40px;
+            text-align: center;
+            height: 40px;
+            right: -20px;
+            background-color: #ea5c38;
+            color: white;
+            line-height: 40px;
+            border-radius: 30px;
+            top: -20px;
+            font-size: 18px;
+            font-weight:bold;
+        }
+
+        div.iframe_video iframe{
+            width:100%;
+            height:100%;
+        }
+
         div.iframe iframe{
             width:100%;
             height:100%;
@@ -224,6 +260,32 @@
             border:1px solid red;
          }
 
+         div.lottery_panel{
+            position:relative;
+         }
+         div.lottery_panel div.lottery{
+            position: absolute;
+            background: green;
+            top: 8px;
+            /* right: 10px; */
+            width: 115px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            left: 148px;
+         }
+         div.lottery_panel div.lottery a{
+            color: white;
+            display:block;
+            width:100%;
+            height:100%;
+         }
+         div.lottery_panel div.lottery a:hover{
+            background:#ea5c38;
+         }
+
+
+
     </style>
 
     <script type="text/javascript">
@@ -268,6 +330,31 @@
              document.body.removeChild(layoutElement);
         }
 
+        function lookVideo(){
+            var layoutDiv = document.createElement("div");
+            layoutDiv.className = "layout";
+            document.body.appendChild(layoutDiv);
+            layoutDiv.id = "layout_div";
+
+            var iframeElement = document.createElement("iframe");
+            iframeElement.src = "http://www.6hck.co/marksix/shipiniframe";
+
+            var aElement = document.createElement("a");
+            aElement.innerHTML = "X";
+            aElement.href="javascript:void()";
+            aElement.onclick = function(){
+                closeLayout();
+            }
+
+            var divElement = document.createElement("div");
+            divElement.className = "iframe_video";
+            divElement.appendChild(iframeElement);
+            divElement.appendChild(aElement);
+            divElement.id = "divElement";
+
+            document.body.appendChild(divElement);
+        }
+
     </script>
 
 </head>
@@ -278,6 +365,10 @@
     <div style="width:100%">
         <img width="100%" th:src="@{/images/banner_1.jpg}"/>
     </div>
+</div>
+<div class="content t_w lottery_panel">
+    <div class="lottery"><a href="javascript:lookVideo()">观看直播</a></div>
+    <iframe th:src="@{http://www.6hck.co/live/(lottery='lhc,pk10,cqssc,gdkl10,kl8,jxssc,xync,xyft,jsk3,shssl',set='lhc',bgcolor='e4e4e4',size=1200)}" width="1200" height="50" frameborder="no" border="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
 </div>
 <div class="content t_w" style="margin:auto;height:45px;border-bottom:1px solid #ccc;position:relative">
     <label class="t_row_spit">一元购</label>

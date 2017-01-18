@@ -149,7 +149,7 @@ public class TopicAction {
     @RequestMapping("/portal/topic/search")
     public String search(Model model,HttpServletRequest request) throws Exception{
         int offset = StrFunUtil.valueInt(request.getParameter("offset"),0);
-        int limit = StrFunUtil.valueInt(request.getParameter("limit"),2);
+        int limit = StrFunUtil.valueInt(request.getParameter("limit"),50);
         String mobile = request.getParameter("mobile") ==null ?"":request.getParameter("mobile");
 
         ServiceToken token = new ServiceToken();

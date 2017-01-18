@@ -101,6 +101,14 @@ public class ProductResult {
                 result += Constant.getColorType(array.getString(i))+"、";
             }
             return content.append("波色类型："+result).toString();
+        }else if (object.getInt("type") == 3){
+            JSONArray array = object.getJSONArray("zodiacType");
+
+            String result = "";
+            for (int i=0 ;i<array.size();i++){
+                result += array.getString(i)+"、";
+            }
+            return "生肖类型："+result+"";
         }
         return "请联系管理员";
     }
