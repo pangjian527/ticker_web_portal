@@ -247,7 +247,10 @@
     </div>
     <div class="page_panel">
         <ul class="pagination pagination-lg">
-            <li th:each="url,urlStat:${pageResult.pageUrls}"><a th:href="${url}" th:text="(${urlStat.index}+1)"></a></li>
+            <li th:each="url:${pageResult.pageUrls}" th:class="(${pageResult.currentPage} eq ${url.key})?'active':''">
+                <a th:if="${url.key lt 0}" href="java:void(0)" th:text="..."></a>
+                <a  th:if="${url.key ge 0}" th:href="${url.value}" th:text="(${url.key}+1)"></a>
+            </li>
         </ul>
     </div>
     <div class="content t_w">

@@ -50,6 +50,10 @@ div.nav .menu ul li.main {
     color:white;
     font-size:28px;
 }
+div.nav .menu ul li.main a{
+    color:white;
+    font-size:28px;
+}
 
 div a.logo{
     display: table-cell;

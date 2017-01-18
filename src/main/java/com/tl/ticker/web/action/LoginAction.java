@@ -51,9 +51,9 @@ public class LoginAction {
             return JsonUtil.toString(new ResultJson(false, "请填写验证码"));
         }
 
-        String code = session.getAttribute(Constant.VALID_CODE).toString();
+        Object valieObj = session.getAttribute(Constant.VALID_CODE);
 
-        if(!code.equalsIgnoreCase(validCode)){
+        if(valieObj==null || !valieObj.toString().equalsIgnoreCase(validCode)){
             return JsonUtil.toString(new ResultJson(false, "验证码不正确"));
         }
 

@@ -206,6 +206,24 @@
             line-height:30px;
          }
 
+         a.nextPage{
+            display: block;
+            height: 40px;
+            line-height: 40px;
+            width: 100%;
+            text-align: center;
+            margin: 20px 0;
+            background: #e4e4e4;
+            font-size: 20px;
+            padding: 5px 0;
+            border:1px solid #e4e4e4
+         }
+
+         a.nextPage:hover{
+            color:red;
+            border:1px solid red;
+         }
+
     </style>
 
     <script type="text/javascript">
@@ -328,7 +346,13 @@
 
 <div class="content t_w" style="margin:auto;height:45px;border-bottom:1px solid #ccc;position:relative">
     <label class="t_row_spit">资料专区</label>
-    <a class="tip_op" href="/portal/topic/search">查看更多</a>
+    <div style="position:absolute;right:10px;top:10px;">
+        <form action="/portal/topic/search" method="get">
+            <input placeholder="号码最后4位" name="mobile" style="margin-right:5px;height:25px;text-indent:10px;" />
+            <button type="submit" style="width:50px;height:30px;">查询</button>
+        </form>
+    </div>
+    <a class="tip_op" style="display:none;" href="/portal/topic/search">查看更多</a>
 </div>
 
 <div class="content t_w topic">
@@ -352,6 +376,7 @@
         </tr>
         </tbody>
     </table>
+    <a class="nextPage" href="/portal/topic/search">查看更多>></a>
 </div>
 
 <div th:include="common/footer::footer"></div>

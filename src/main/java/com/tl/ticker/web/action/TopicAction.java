@@ -62,7 +62,7 @@ public class TopicAction {
             replyResults.add(replyResult);
         }
 
-        String url = "/portal/topic/view";
+        String url = "/portal/topic/view?id="+id;
         model.addAttribute("pageResult",new PageResult(searchReplyResult.getTotalCount(),limit,offset,url));
         model.addAttribute("topic",topicResult);
         model.addAttribute("replyResults",replyResults);
@@ -149,7 +149,7 @@ public class TopicAction {
     @RequestMapping("/portal/topic/search")
     public String search(Model model,HttpServletRequest request) throws Exception{
         int offset = StrFunUtil.valueInt(request.getParameter("offset"),0);
-        int limit = StrFunUtil.valueInt(request.getParameter("limit"),30);
+        int limit = StrFunUtil.valueInt(request.getParameter("limit"),2);
         String mobile = request.getParameter("mobile") ==null ?"":request.getParameter("mobile");
 
         ServiceToken token = new ServiceToken();
